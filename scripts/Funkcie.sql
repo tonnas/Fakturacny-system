@@ -12,8 +12,10 @@ IS
 d_MB integer;
 BEGIN
   SELECT SUM(DATA_MB) INTO d_MB From HISTORIA_INTERNET
-    where TEL_CISLO = p_tel_c AND DATUM > odkedy AND DATUM < dokedy;
-	return d_MB; 
+  where TEL_CISLO = p_tel_c 
+  AND DATUM > odkedy 
+  AND DATUM < dokedy;
+  return d_MB; 
 END;	
 
 /*
@@ -29,12 +31,12 @@ IS
 cRet integer;
 BEGIN
   SELECT SUM(CENA) INTO cRet FROM CENNIK_SLUZBA
-    JOIN SLUZBA ON CENNIK_SLUZBA.ID_SLUZBY = SLUZBA.ID_SLUZBY
-      JOIN TEL_CISLO_SLUZBA ON SLUZBA.ID_SLUZBY = TEL_CISLO_SLUZBA.ID_SLUZBY
-        where TEL_CISLO_SLUZBA.TEL_CISLO = p_tel_c
-          AND TEL_CISLO_SLUZBA.ODKEDY >= p_odkedy
-            AND NVL(TEL_CISLO_SLUZBA.DOKEDY,sysdate) >= p_dokedy;
-	return cRet; 
+  JOIN SLUZBA ON CENNIK_SLUZBA.ID_SLUZBY = SLUZBA.ID_SLUZBY
+  JOIN TEL_CISLO_SLUZBA ON SLUZBA.ID_SLUZBY = TEL_CISLO_SLUZBA.ID_SLUZBY
+  where TEL_CISLO_SLUZBA.TEL_CISLO = p_tel_c
+  AND TEL_CISLO_SLUZBA.ODKEDY >= p_odkedy
+  AND NVL(TEL_CISLO_SLUZBA.DOKEDY,sysdate) >= p_dokedy;
+  return cRet; 
 END;
 
 /*
@@ -51,8 +53,8 @@ cRet integer;
 BEGIN
   SELECT SUM(CENA) INTO cRet FROM PAROVA_SLUZBA
   where TEL_CISLO = p_tel_c
-    AND PAROVA_SLUZBA.ODKEDY <= p_odkedy
-      AND NVL(PAROVA_SLUZBA.DOKEDY,sysdate) >= p_dokedy;
-	return cRet; 
+  AND PAROVA_SLUZBA.ODKEDY <= p_odkedy
+  AND NVL(PAROVA_SLUZBA.DOKEDY,sysdate) >= p_dokedy;
+  return cRet; 
 END;
 	
