@@ -14,8 +14,7 @@ BEGIN
   SELECT SUM(DATA_MB) INTO d_MB From HISTORIA_INTERNET
     where TEL_CISLO = p_tel_c AND DATUM > odkedy AND DATUM < dokedy;
 	return d_MB; 
-END;
-	
+END;	
 
 /*
 	Sucet ceny vsetkych sluzieb konkretneho cisla
@@ -38,7 +37,6 @@ BEGIN
 	return cRet; 
 END;
 
-	
 /*
 	Sucet ceny parovej sluzby na konretnom cisle
 	v konkretnom obdobii.

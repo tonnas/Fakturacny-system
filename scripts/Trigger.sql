@@ -7,35 +7,36 @@ Author		Tomas Illo
 	Kontrola rodneho cisla
 */
 create or replace TRIGGER TR_ROD_C
-	BEFORE INSERT OR UPDATE OF ROD_CISLO ON OSOBA
-		FOR EACH ROW
-			 DECLARE
-			   rod_c OSOBA.ROD_CISLO%TYPE;
-			   den CHAR(2);
-			   mesiac CHAR(2);
-			   rok CHAR(2);
-			   datum DATE;
-			 BEGIN
-			   rod_c := :NEW.ROD_CISLO;	   
-			   mesiac := MID(rod_c,3,2); 
-			   den   := MID(rod_c,5,2);;  
-			   rok   := MID(rod_c,1,2);;	     
+  BEFORE INSERT OR UPDATE OF ROD_CISLO ON OSOBA
+	FOR EACH ROW
+	 DECLARE
+	   rod_c OSOBA.ROD_CISLO%TYPE;
+	   den CHAR(2);
+	   mesiac CHAR(2);
+	   rok CHAR(2);
+	   datum DATE;
+	 BEGIN
+	   rod_c := :NEW.ROD_CISLO;	   
+	   mesiac := MID(rod_c,3,2); 
+	   den    := MID(rod_c,5,2);  
+	   rok    := MID(rod_c,1,2);	     
 
-			 IF ( MOD(to_number(rod_c), 11) <> 0 ) THEN
-				Raise_Application_Error (-20203, 'Neplatne rodne cislo');
-			 END IF;
+	 IF ( MOD(to_number(rod_c), 11) <> 0 ) THEN
+		Raise_Application_Error (-20203, 'Neplatne rodne cislo');
+	 END IF;
 
-			 IF ( to_number(mesiac) > 50 ) THEN
-			   mesiac := mesiac - 50;
-			 END IF;
+	 IF ( to_number(mesiac) > 50 ) THEN
+	   mesiac := mesiac - 50;
+	 END IF;
 
-			 BEGIN
-			  datum := den||'.'||mesic||'.'||rok;
-			 WHEN OTHERS THEN
-				Raise_Application_Error (-20204, 'Neplatny datum narodenia');
-			 END;
+	 BEGIN
+	  datum := den||'.'||mesic||'.'||rok;
+	 WHEN OTHERS THEN
+		Raise_Application_Error (-20204, 'Neplatny datum narodenia');
+	 END;
  END TR_ROD_C;
- d
+ 
+ 
  /*
 	Kontrola telefonneho cisla
  */
