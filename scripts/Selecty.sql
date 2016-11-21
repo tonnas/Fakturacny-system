@@ -54,7 +54,22 @@ select v_sieti from SMS_SLUZBA
    join TEL_CISLO_SLUZBA ON TEL_CISLO_SLUZBA.ID_SLUZBY = SLUZBA.ID_SLUZBY
     where TEL_CISLO_SLUZBA.TEL_CISLO = '0948420074';
 	
-	
+/*
+	Pocet minut v sieti (1) a mimo nej (0)
+*/	
+ select sum("dlzka_hovoru") from POM_H 
+  where OPERTOR_TC(P_TEL_C,P_PRIJIMATEL) = 1;
+  
+ /*
+	Pocet sms v sieti (1) a mimo nej (0)
+ */
+select sum("pocet_sms") from POM_S 
+  where OPERTOR_TC(P_TEL_C,P_PRIJIMATEL) = 1;
  
+ /*
+	Pocet mms v sieti (1) a mimo nej (0)
+ */
+ select sum("pocet_mms") from POM_S 
+  where OPERTOR_TC(P_TEL_C,P_PRIJIMATEL) = 1;
  
  
