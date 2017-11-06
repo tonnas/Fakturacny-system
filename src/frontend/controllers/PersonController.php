@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\PersonSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
@@ -8,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\Person;
+use common\models\User;
+use frontend\models\SignupForm;
 
 /**
  * ArticleController implements the CRUD actions for Article model.
@@ -34,14 +37,14 @@ class PersonController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Person::find(),
-        ]);
+        $searchModel = new PersonSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $model = Person::find()->all();
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'model' => $model,
+            'searchModel'  => $searchModel,
+            'model'        => $model,
         ]);
     }
 
@@ -61,14 +64,18 @@ class PersonController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Person();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $person = new Person();
+        $user   = new SignupForm();
+
+        if (!is_null(Yii::$app->request->post("Person"))) {
+            return $this->redirect(['index']);
         } else {
-            return $this->render('create', [
-                'model' => $model,
+            return $this->renderAjax('create', [
+                'person' => $person,
+                'user'   => $user,
             ]);
         }
+
     }
 
     /**

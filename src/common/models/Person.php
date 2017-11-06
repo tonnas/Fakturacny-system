@@ -35,7 +35,6 @@ class Person extends ActiveRecord
         ];
     }
 
-
     /**
      * @inheritdoc
      */

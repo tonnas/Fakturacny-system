@@ -2,7 +2,7 @@ Options -Indexes
     RewriteEngine on
     IndexIgnore */*
 
-    RewriteBase /NAZOV_PROJEKTU/
+    RewriteBase /FakturacnySystem/src/
 
     RewriteRule ^admin/?(.*)$ backend/web/$1 [QSA,L]
 

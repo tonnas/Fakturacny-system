@@ -2,52 +2,69 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'Admin';
 ?>
-<div class="site-index">
-
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+<!--<div class="site-index">-->
+    <div class="container">
+        <div class="row row-head">
+            <div style="margin-left: 4%">
+                <h1>Administracia</h1>
+                <p> Sem hodim nejake info ako pocet zamestnancov, zakaznikov, zisk, naklady</p>
             </div>
         </div>
+        <div class="row row_container">
+<!--            <a href="#">-->
+<!--                <div class="col col-sm-2 check_item">-->
+<!--                    <h4 class="title-item">Zamestnanci</h4>-->
+<!--                    <p></p>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--            <a href="#">-->
+<!--                <div class="col col-sm-2 check_item">-->
+<!--                    <h4 class="title-item">Zakaznici</h4>-->
+<!--                    <p> </p>-->
+<!--                </div>-->
+<!--            </a>-->
+        </div>
+        <div class="row">
 
+        </div>
     </div>
-</div>
+
+<!--</div>-->
+
+<style>
+    .container {
+        height: 100%;
+    }
+    .check_item {
+        border-radius: 3%;
+        /*border: groove;*/
+        float: left;
+        text-align: center;
+        margin-left: 3%;
+        margin-top: 3%;
+        height: 100px;
+        background-color: #00b3ee;
+        box-shadow: -1px 1px 15px 1px #000;
+    }
+    .check_item:hover {
+        background-color: cyan;
+    }
+    .title-item {
+        margin-top: 20%;
+        font-weight: bold;
+        font-size: 150%;
+    }
+    .row_container {
+        background-color: whitesmoke;
+        text-align: center;
+        margin-top: 2%;
+        height: 75%;
+    }
+    .row-head {
+        background-color: whitesmoke;
+        /*text-align: center;*/
+        height: 20%;
+    }
+</style>

@@ -28,7 +28,8 @@
         "sfedosimov/yii2-oci8pdo": "*",
         "codeception/base": "^2.2.3",
         "codeception/verify": "~0.3.1",
-        "apaoww/yii2-oci8": "dev-master"
+        "apaoww/yii2-oci8": "dev-master",
+        "kartik-v/yii2-widget-sidenav": "*"
     },
     "config": {
         "process-timeout": 1800,
