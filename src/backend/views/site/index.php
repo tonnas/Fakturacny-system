@@ -13,18 +13,6 @@ $this->title = 'Admin';
             </div>
         </div>
         <div class="row row_container">
-<!--            <a href="#">-->
-<!--                <div class="col col-sm-2 check_item">-->
-<!--                    <h4 class="title-item">Zamestnanci</h4>-->
-<!--                    <p></p>-->
-<!--                </div>-->
-<!--            </a>-->
-<!--            <a href="#">-->
-<!--                <div class="col col-sm-2 check_item">-->
-<!--                    <h4 class="title-item">Zakaznici</h4>-->
-<!--                    <p> </p>-->
-<!--                </div>-->
-<!--            </a>-->
         </div>
         <div class="row">
 

@@ -56,8 +56,13 @@ class Person extends ActiveRecord
         ];
     }
 
-    public static function getAllPersons()
+    public function getUsername()
     {
+        return $this->hasOne(User::classname(), ['ID_USER' => 'ID_USER']);
+    }
 
+    public function getEmail()
+    {
+        return $this->hasOne(User::classname(), ['ID_USER' => 'ID_USER']);
     }
 }

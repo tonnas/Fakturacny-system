@@ -7,6 +7,7 @@ use backend\assets\AppAsset;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 use kartik\sidenav\SideNav;
@@ -62,21 +63,31 @@ AppAsset::register($this);
             <div class="sidebar-head">
                 <h3 class="mine-sitebar-head-name">FS</h3>
             </div>
-            <div class="mine-sitebar-item">
-                <div class="mine-sitebar-item-name">Domov</div>
-            </div>
-            <div class="mine-sitebar-item">
-                <div class="mine-sitebar-item-name">Zamestnanci</div>
-            </div>
-            <div class="mine-sitebar-item">
-                <div class="mine-sitebar-item-name">Zakaznici</div>
-            </div>
-            <div class="mine-sitebar-item">
-                <div class="mine-sitebar-item-name">Fakturi</div>
-            </div>
-            <div class="mine-sitebar-item">
-                <div class="mine-sitebar-item-name">Logi</div>
-            </div>
+            <a href="<?= Url::to(['site/index']); ?>" style="text-decoration: none">
+                <div class="mine-sitebar-item">
+                    <div class="mine-sitebar-item-name">Domov</div>
+                </div>
+            </a>
+            <a href="<?= Url::to(['person/index']); ?>" style="text-decoration: none">
+                <div class="mine-sitebar-item">
+                    <div class="mine-sitebar-item-name">Zamestnanci</div>
+                </div>
+            </a>
+            <a href="#" style="text-decoration: none">
+                <div class="mine-sitebar-item">
+                    <div class="mine-sitebar-item-name">Zakaznici</div>
+                </div>
+            </a>
+            <a href="#" style="text-decoration: none">
+                <div class="mine-sitebar-item">
+                    <div class="mine-sitebar-item-name">Faktury</div>
+                </div>
+            </a>
+            <a href="<?= Url::to(['person/index']); ?>" style="text-decoration: none">
+                <div class="mine-sitebar-item">
+                    <div class="mine-sitebar-item-name">Logy</div>
+                </div>
+            </a>
         </div>
         <div class="mine-navbar">
             <?php
@@ -90,7 +101,7 @@ AppAsset::register($this);
                     <b><?= date('Y-m-d') ?></b>
                 </div>
                 <div style="width: 95%; min-width: 140px; height: 100%">
-                    <a style="font-style: oblique">
+                    <a>
                         <b class="mine-navbar-username"><?= 'Logout (' . Yii::$app->user->identity->USERNAME . ')' ?></b>
                     </a>
                 </div>
