@@ -1,6 +1,10 @@
 <?php
 namespace backend\controllers;
 
+use common\models\Address;
+use common\models\City;
+use common\models\Employee;
+use common\models\Office;
 use common\models\PersonSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -15,7 +19,7 @@ use backend\models\SignupForm;
 /**
  * ArticleController implements the CRUD actions for Article model.
  */
-class PersonController extends Controller
+class EmployeeController extends Controller
 {
     /**
      * @inheritdoc
@@ -72,6 +76,7 @@ class PersonController extends Controller
      */
     public function actionCreate()
     {
+//        exit;
         if (!is_null(Yii::$app->request->post('SignupForm'))) {
             $signup = Yii::$app->request->post('SignupForm');
             $check_user = User::findByUsername($signup['username']);
@@ -82,17 +87,20 @@ class PersonController extends Controller
             } else {
                 $user = $check_user;
             }
-            if (isset($user->ID_USER)) {
+            if (isset($user->USERNAME)) {
                 $data_person = Yii::$app->request->post('Person');
                 if (is_null(Person::findIdentity($data_person['IDENTIFICATION_NUMBER']))) {
-                    $person             = new Person();
-                    $person->ID_USER    = $user->ID_USER;
-                    $person->LAST_NAME  = $data_person['LAST_NAME'];
-                    $person->CITY       = $data_person['POST_CODE'];
-                    $person->STREET     = $data_person['STREET'];
-                    $person->FIRST_NAME = $data_person['FIRST_NAME'];
-                    $person->POST_CODE  = $data_person['POST_CODE'];
-                    $person->IDENTIFICATION_NUMBER = $data_person['IDENTIFICATION_NUMBER'];
+                    $person                = new Person();
+                    $person->USERNAME      = $user->USERNAME;
+                    $person->ID_ADDRESS    = 1;
+                    $person->LAST_NAME     = $data_person['LAST_NAME'];
+                    $person->FIRST_NAME    = $data_person['FIRST_NAME'];
+                    $person->IDENTIFICATION_NUMBER   = $data_person['IDENTIFICATION_NUMBER'];
+                    $employee                        = new Employee();
+                    $employee->ID_OFFICE             = 1;
+                    $employee->IDENTIFICATION_NUMBER = $person->IDENTIFICATION_NUMBER;
+                    $employee->VALID_FROM            = 1;
+
                     if ($person->save()) {
                         \Yii::$app->getSession()->setFlash('success', 'Úspešne uložený používateľ');
                     } else {
@@ -104,9 +112,11 @@ class PersonController extends Controller
             \Yii::$app->getSession()->setFlash('warning', 'Osobu s týmto rodným číslom už v databáze máme');
             return $this->redirect(['index']);
         } else {
-            return $this->renderAjax('create', [
-                'person' => new Person(),
-                'user'   => new SignupForm(),
+            return $this->render('create', [
+                'person'   => new Person(),
+                'user'     => new SignupForm(),
+                'address'  => new Address(),
+                'office'   => new Office()
             ]);
         }
 
@@ -118,25 +128,26 @@ class PersonController extends Controller
      */
     public function actionUpdate($id)
     {
-        $person = Person::findIdentity($id);
+        $person  = Person::findIdentity($id);
+        $address = Address::findIdentity($person->ID_ADDRESS);
         if (!is_null($person)) {
-            $user = User::findIdentity($person->ID_USER);
+            $user = User::findIdentity($person->USERNAME);
             if (!is_null($user)) {
-                if (!is_null(Yii::$app->request->post('SignupForm'))) {
-                    $user->load(Yii::$app->request->post());
+                if (!is_null(Yii::$app->request->post('User'))) {
+                    $user->USERNAME = Yii::$app->request->post('User')['USERNAME'];
+                    $user->EMAIL    = Yii::$app->request->post('User')['EMAIL'];
                     $user->update();
                     $data_person = Yii::$app->request->post('Person');
-                    if (is_null(Person::findIdentity($data_person['IDENTIFICATION_NUMBER']))) {
-                        $person->IDENTIFICATION_NUMBER = $data_person['IDENTIFICATION_NUMBER'];
-                        $person->LAST_NAME  = $data_person['LAST_NAME'];
-                        $person->CITY       = $data_person['POST_CODE'];
-                        $person->STREET     = $data_person['STREET'];
-                        $person->FIRST_NAME = $data_person['FIRST_NAME'];
-                        $person->POST_CODE  = $data_person['POST_CODE'];
-                        $person->update();
-                    } else {
-                        \Yii::$app->getSession()->setFlash('warning', 'Nepodarilo sa upraviť nového používateľa');
-                    }
+                    $person->IDENTIFICATION_NUMBER = $data_person['IDENTIFICATION_NUMBER'];
+                    $person->LAST_NAME  = $data_person['LAST_NAME'];
+                    $person->CITY       = $data_person['CITY'];
+                    $person->STREET     = $data_person['STREET'];
+                    $person->FIRST_NAME = $data_person['FIRST_NAME'];
+                    $person->POST_CODE  = $data_person['POST_CODE'];
+                    $person->update();
+                    \Yii::$app->getSession()->setFlash('success', 'Používateľ uspesne upraveny');
+
+                    return $this->redirect(['index']);
                 }
             } else {
                 \Yii::$app->getSession()->setFlash('warning', 'Nenasiel som hladanu osobu');
@@ -147,9 +158,12 @@ class PersonController extends Controller
             return $this->redirect(['index']);
         }
 
-        return $this->renderAjax('update', [
-            'person' => $person,
-            'user'   => $user
+        return $this->render('update', [
+            'person'  => $person,
+            'user'    => $user,
+            'address' => $address,
+            'office'  => new Office()
+
         ]);
 
     }

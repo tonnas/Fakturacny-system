@@ -8,7 +8,7 @@
 
     /* @var $this yii\web\View */
 
-    $this->title = 'Zamestnanci';
+    $this->title = 'Zakaznici';
     $this->params['breadcrumbs'][] = $this->title;
 
     Modal::begin([
@@ -28,7 +28,7 @@
                     <h1><?php echo Html::encode($this->title) ?></h1>
 
                     <?= Html::button(
-                            'Vytvorit zamestnanca',
+                            'Vytvorit zakaznika',
                             ['value'=>Url::to(['create']),'class'=>'btn btn-info grid-button, modalButton'])
                     ?>
                     <?= Yii::$app->session->getFlash('warning'); ?>

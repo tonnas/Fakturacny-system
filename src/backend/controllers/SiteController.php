@@ -1,11 +1,14 @@
 <?php
 namespace backend\controllers;
 
+use common\models\Operator;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\User as Login;
+use yii\web\User;
 
 /**
  * Site controller
@@ -22,7 +25,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error', 'operators', 'login-operator'],
                         'allow' => true,
                     ],
                     [
@@ -60,7 +63,21 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->render('index', [
+            'operators' => Operator::find()->all()
+        ]);
+    }
+
+    /**
+     * Operators action.
+     *
+     * @return string
+     */
+    public function actionOperators()
+    {
+        return $this->render('operators', [
+            'operators' => Operator::find()->all()
+        ]);
     }
 
     /**
@@ -94,5 +111,32 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    /**
+     * LoginOperator action
+     *
+     * @param $operator
+     * @return string|\yii\web\Response
+     */
+    public function actionLoginOperator($operator)
+    {
+        $model = new LoginForm();
+        if (!is_null(Yii::$app->request->post('LoginForm'))) {
+            $post = Yii::$app->request->post('LoginForm');
+            $user = Login::findIdentity($post['username']);
+            if (!is_null($user) && $user->ID_OPERATOR == $operator) {
+                $model->load(Yii::$app->request->post());
+                $model->login();
+                $this->redirect('operator/index');
+            } else {
+                \Yii::$app->getSession()->setFlash('warning', 'Neplatne prihlasenie');
+                $this->redirect(['login']);
+            }
+        } else {
+            return $this->renderAjax('loginOperator', [
+                'model' => $model,
+            ]);
+        }
     }
 }

@@ -8,12 +8,9 @@ use yii\db\ActiveRecord;
  *
  *
  * @property integer $identification_number
- * @property integer $id_user
  * @property string $first_name
  * @property string $last_name
- * @property string $street
- * @property string $post_code
- * @property string $city
+ * @property string $id_address
  */
 class Person extends ActiveRecord
 {
@@ -31,7 +28,7 @@ class Person extends ActiveRecord
     public function rules()
     {
         return [
-            [['IDENTIFICATION_NUMBER', 'ID_USER', 'FIRST_NAME', 'LAST_NAME'], 'required'],
+            [['IDENTIFICATION_NUMBER', 'FIRST_NAME', 'LAST_NAME'], 'required'],
         ];
     }
 
@@ -49,20 +46,20 @@ class Person extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'IDENTIFICATION_NUMBER' => 'Identifikacne cislo',
-            'ID_USER' => 'User id',
-            'FIRST_NAME' => 'Meno',
-            'LAST_NAME' => 'Priezvisko',
+            'IDENTIFICATION_NUMBER' => 'Rodné čislo',
+            'USERNAME'              => 'Používateľské meno',
+            'FIRST_NAME'            => 'Meno',
+            'LAST_NAME'             => 'Priezvisko',
         ];
     }
 
     public function getUsername()
     {
-        return $this->hasOne(User::classname(), ['ID_USER' => 'ID_USER']);
+        return $this->hasOne(User::classname(), ['USERNAME' => 'USERNAME']);
     }
 
     public function getEmail()
     {
-        return $this->hasOne(User::classname(), ['ID_USER' => 'ID_USER']);
+        return $this->hasOne(User::classname(), ['USERNAME' => 'USERNAME']);
     }
 }

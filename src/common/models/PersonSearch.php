@@ -18,7 +18,7 @@ class PersonSearch extends Person
     {
         return [
             [['IDENTIFICATION_NUMBER'],'integer'],
-            [[ 'FIRST_NAME', 'LAST_NAME', 'STREET', 'POST_CODE', 'CITY', 'username', 'email'], 'safe'],
+            [[ 'FIRST_NAME', 'LAST_NAME', 'STREET', 'POST_CODE', 'ID_ADDRESS', 'username', 'email'], 'safe'],
         ];
     }
     /**
@@ -67,11 +67,9 @@ class PersonSearch extends Person
         $query->andFilterWhere(['like','IDENTIFICATION_NUMBER', $this->IDENTIFICATION_NUMBER])
             ->andFilterWhere(['like', 'FIRST_NAME'            , $this->FIRST_NAME])
             ->andFilterWhere(['like', 'LAST_NAME'             , $this->LAST_NAME])
-            ->andFilterWhere(['like', 'CITY'                  , $this->CITY])
-            ->andFilterWhere(['like', 'POST_CODE'             , $this->POST_CODE])
+            ->andFilterWhere(['like', 'ID_ADDRESS'            , $this->ID_ADDRESS])
             ->andFilterWhere(['like', 'EMAIL'                 , $this->email])
-            ->andFilterWhere(['like', 'USERNAME'              , $this->username])
-            ->andFilterWhere(['like', 'STREET'                , $this->STREET]);
+            ->andFilterWhere(['like', 'USERNAME'              , $this->username]);
 
         return $dataProvider;
     }

@@ -7,11 +7,11 @@ $this->title = 'Vytvorit osobu';
 $this->params['breadcrumbs'][] = ['label' => 'Comments', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="comment-create">
+<div class="person-create">
 
     <?= $this->render('_form', [
-        'person' => $person,
-        'user'   => $user,
+        'person'   => $person,
+        'user'     => $user,
     ]) ?>
 
 </div>

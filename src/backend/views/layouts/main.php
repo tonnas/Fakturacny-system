@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use backend\assets\AppAsset;
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -11,6 +12,14 @@ use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 use kartik\sidenav\SideNav;
+
+
+Modal::begin([
+    'id'=>'modal',
+    'size'=>'modal-xs',
+]);
+echo "<div id='modalContent'></div>";
+Modal::end();
 
 AppAsset::register($this);
 ?>
@@ -26,85 +35,101 @@ AppAsset::register($this);
     <?php $this->head() ?>
 </head>
 <body>
+
 <?php $this->beginBody() ?>
 
-<!--<div class="wrap" style="height: 100%;">-->
-<!--    --><?php
-//        NavBar::begin([
-//            'brandLabel' => 'Fakturacny system',
-//            'brandUrl' => Yii::$app->homeUrl,
-//            'options' => [
-//                'class' => 'navbar-inverse navbar-fixed-top',
-//            ],
-//        ]);
-//        $menuItems = [
-//            ['label' => 'Home', 'url' => ['/site/index']],
-//        ];
-//        if (Yii::$app->user->isGuest) {
-//            $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-//        } else {
-//            $menuItems[] = '<li>'
-//                . Html::beginForm(['/site/logout'], 'post')
-//                . Html::submitButton(
-//                    'Logout (' . Yii::$app->user->identity->USERNAME . ')',
-//                    ['class' => 'btn btn-link logout']
-//                )
-//                . Html::endForm()
-//                . '</li>';
-//        }
-//        echo Nav::widget([
-//            'options' => ['class' => 'navbar-nav navbar-right'],
-//            'items' => $menuItems,
-//        ]);
-//        NavBar::end();
-//    ?>
-    <div style="height: 100%;">
+    <div class="body">
         <div class="mine-sitebar">
             <div class="sidebar-head">
                 <h3 class="mine-sitebar-head-name">FS</h3>
             </div>
-            <a href="<?= Url::to(['site/index']); ?>" style="text-decoration: none">
-                <div class="mine-sitebar-item">
-                    <div class="mine-sitebar-item-name">Domov</div>
-                </div>
-            </a>
-            <a href="<?= Url::to(['person/index']); ?>" style="text-decoration: none">
-                <div class="mine-sitebar-item">
-                    <div class="mine-sitebar-item-name">Zamestnanci</div>
-                </div>
-            </a>
-            <a href="#" style="text-decoration: none">
-                <div class="mine-sitebar-item">
-                    <div class="mine-sitebar-item-name">Zakaznici</div>
-                </div>
-            </a>
-            <a href="#" style="text-decoration: none">
-                <div class="mine-sitebar-item">
-                    <div class="mine-sitebar-item-name">Faktury</div>
-                </div>
-            </a>
-            <a href="<?= Url::to(['person/index']); ?>" style="text-decoration: none">
-                <div class="mine-sitebar-item">
-                    <div class="mine-sitebar-item-name">Logy</div>
-                </div>
-            </a>
+            <?php if (!Yii::$app->user->isGuest) { ?>
+
+                <a href="<?= Url::to(['site/index']); ?>" style="text-decoration: none">
+                    <div class="mine-sitebar-item">
+                        <div class="mine-sitebar-item-name">
+                            <span class="glyphicon glyphicon-home"></span>  Admin
+                        </div>
+                    </div>
+                </a>
+                <a href="<?= Url::to(['employee/index']); ?>" style="text-decoration: none">
+                    <div class="mine-sitebar-item">
+                        <div class="mine-sitebar-item-name">
+                            <span class="glyphicon glyphicon-list-alt"></span>  Zamestnanci
+                        </div>
+                    </div>
+                </a>
+                <a href="<?= Url::to(['customer/index']); ?>" style="text-decoration: none">
+                    <div class="mine-sitebar-item">
+                        <div class="mine-sitebar-item-name">
+                            <span class="glyphicon glyphicon-user"></span>  Zakaznici
+                        </div>
+                    </div>
+                </a>
+                <a href="<?= Url::to(['invoice/index']); ?>" style="text-decoration: none">
+                    <div class="mine-sitebar-item">
+                        <div class="mine-sitebar-item-name">
+                            <span class="glyphicon glyphicon-calendar"></span>  Faktury
+                        </div>
+                    </div>
+                </a>
+    <!--            <a href="--><?//= Url::to(['site/index']); ?><!--" style="text-decoration: none">-->
+    <!--                <div class="mine-sitebar-item">-->
+    <!--                    <div class="mine-sitebar-item-name">-->
+    <!--                        <span class="glyphicon glyphicon-home"></span>  Sluzbykriminolo-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </a>-->
+                <a href="<?= Url::to(['site/index']); ?>" style="text-decoration: none">
+                    <div class="mine-sitebar-item">
+                        <div class="mine-sitebar-item-name">
+                            <span class="glyphicon glyphicon-alert"></span> Logy
+                        </div>
+                    </div>
+                </a>
+            <?php } else { ?>
+                <a href="<?= Url::to(['site/login']); ?>" style="text-decoration: none">
+                    <div class="mine-sitebar-item">
+                        <div class="mine-sitebar-item-name">
+                            <span class="glyphicon glyphicon-home"></span>  Super-Admin
+                        </div>
+                    </div>
+                </a>
+                <a href="<?= Url::to(['site/operators']); ?>" style="text-decoration: none">
+                    <div class="mine-sitebar-item">
+                        <div class="mine-sitebar-item-name">
+                            <span class="glyphicon glyphicon-list-alt"></span>  Operatory
+                        </div>
+                    </div>
+                </a>
+            <?php } ?>
         </div>
         <div class="mine-navbar">
             <?php
             if (Yii::$app->user->isGuest) {
                 ?>
-                <b class="mine-navbar-username">Login</b>
                 <?php
             } else {
                 ?>
-                <div style="float: left; min-width: 200px; width: 20%; text-align: left; margin-left: 2%; height: 100%">
-                    <b><?= date('Y-m-d') ?></b>
+                <div class="block-date">
+                    <b style="width:60%; margin-top: 5%; display: inline-block; font-size: 15px"><?= date('Y-m-d') ?></b>
                 </div>
-                <div style="width: 95%; min-width: 140px; height: 100%">
-                    <a>
-                        <b class="mine-navbar-username"><?= 'Logout (' . Yii::$app->user->identity->USERNAME . ')' ?></b>
-                    </a>
-                </div>
+
+                <a href="<?= Url::to(['siite/logout']); ?>" style="text-decoration: none">
+                    <div class="logout-button">
+
+                        <b class="mine-navbar-username">
+                            <?=
+                                Html::beginForm(['/site/logout'], 'post')
+                                . Html::submitButton(
+                                    'Logout (' . Yii::$app->user->identity->USERNAME . ')',
+                                    ['class' => 'btn btn-link logout']
+                                )
+                                . Html::endForm()
+                            ?>
+                        </b>
+                    </div>
+                </a>
                 <?php
             }
             ?>
@@ -116,19 +141,8 @@ AppAsset::register($this);
             <?= Alert::widget() ?>
             <?= $content ?>
         </div>
-        <div class=".mine-navbar-border">
-        </div>
     </div>
-    <div class="mine-footer"></div>
-<!--</div>-->
-
-<!--<footer class="footer">-->
-<!--    <div class="container">-->
-<!--        <p class="pull-left">&copy; Fakturacny system --><?//= date('Y') ?><!--</p>-->
-<!---->
-<!--        <p class="pull-right"> Tomas Illo</p>-->
-<!--    </div>-->
-<!--</footer>-->
+<!--    <div class="mine-footer"></div>-->
 
 <?php $this->endBody() ?>
 </body>

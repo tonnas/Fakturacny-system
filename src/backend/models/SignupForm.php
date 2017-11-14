@@ -14,7 +14,6 @@ class SignupForm extends Model
     public $email;
     public $password;
 
-
     /**
      * @inheritdoc
      */
@@ -38,6 +37,18 @@ class SignupForm extends Model
     }
 
     /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Používateľské meno',
+            'password' => 'Heslo',
+            'email'    => 'E-mail',
+        ];
+    }
+
+    /**
      * Signs user up.
      *
      * @return User|null the saved model or null if saving fails
@@ -50,6 +61,7 @@ class SignupForm extends Model
         $user = new User();
         $user->USERNAME   = $this->username;
         $user->EMAIL      = $this->email;
+        $user->ROLE_NAME  = 'employee';
         $user->setPassword($this->password);
         $user->generateAuthKey();
 

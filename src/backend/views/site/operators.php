@@ -2,23 +2,24 @@
 
 /* @var $this yii\web\View */
 
+use yii\helpers\Html;
+use yii\helpers\Url;
+
 $this->title = 'Admin';
 ?>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 <!--<div class="site-index">-->
 <div class="container">
-    <div class="row row-head">
-        <div style="margin-left: 4%">
-            <h1>Administracia</h1>
-        </div>
-    </div>
     <div class="row" style="margin-top: 4%">
         <?php foreach ($operators as $operator) { ?>
-            <a href="#" class="operator-link">
-                <div class="col col-lg-2 panel" >
-                    <h3 class="operato-title"><?= $operator->NAME ?></h3>
-                    <p style="margin-top: 30px"> Sem hodim napriklad pocet aktivnych cisiel, pocet zamestnancov, pobociek a podobne</p>
-                </div>
-            <a>
+
+            <?= Html::button(
+                    $operator->NAME, [
+                        'value' => Url::to(['site/login-operator', 'operator' => $operator->ID_OPERATOR]),
+                        'class'=>'btn btn-xs btn-info grid-button modalButton'
+                    ]
+            ) ?>
+
         <?php } ?>
     </div>
 </div>
@@ -43,5 +44,13 @@ $this->title = 'Admin';
     .operator-link {
         text-decoration: none;
         color: black;
+    }
+    .modalButton {
+        font-size: 30px;
+        height: 200px;
+        width: 200px;
+    }
+    .modal-backdrop {
+        display: none;
     }
 </style>

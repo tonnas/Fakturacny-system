@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="comment-create">
 
     <?= $this->render('_form', [
-        'person' => $person,
+        'employee' => $person,
         'user'   => $user,
     ]) ?>
 

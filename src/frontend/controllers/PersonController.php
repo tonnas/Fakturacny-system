@@ -71,7 +71,7 @@ class PersonController extends Controller
             return $this->redirect(['index']);
         } else {
             return $this->renderAjax('create', [
-                'person' => $person,
+                'employee' => $person,
                 'user'   => $user,
             ]);
         }

@@ -1,22 +1,21 @@
+.body {
+    height: 100%;
+    width: 100%;
+}
 .mine-sitebar {
     width: 17%;
     height: 100%;
     float: left;
     background-color: #00b3ee;
-    position: static;
+    position: fixed;
 }
 .mine-navbar {
     text-align: right;
     width: 83%;
     float: left;
     height: 7%;
-    background-color: white;
-}
-.mine-navbar-border {
-    width: 83%;
-    height: 2%;
-    float: left;
-    background-color: black;
+    position: fixed;
+    margin-left: 17%;
 }
 .mine-content {
     min-width: 520px;
@@ -24,9 +23,10 @@
     width: 80%;
     height:90%;
     float: left;
-    margin-left: 1.5%;
-    margin-top:0.8%;
-    overflow: hidden;
+    margin-left: 18.5%;
+    margin-top:7.8%;
+    overflow-y: scroll;
+    position: fixed;
 }
 .mine-sitebar-item {
     height: 50px;
@@ -43,12 +43,15 @@
     color: white;
 }
 .mine-navbar-username {
-    margin-right: 3%;
-    width: 50%;
-    font-size: 150%;
+    width: 100%;
+    font-size: 120%;
+    margin-top: 7%;
+    display: inline-block;
+    text-align: center;
+    color: black;
 }
 .mine-sitebar-head-name {
-    border-bottom: groove;
+    border-bottom: white;
     font-weight: bold;
     color: white;
     text-align: center;
@@ -61,4 +64,63 @@
     background-color: black;
 }
 .mine-navbar-username:hover {
+}
+.logout-button {
+    width: 15%;
+    min-width: 140px;
+    height: 100%;
+    float: right;
+    margin-right: 3%;
+}
+.logout-button:hover {
+    background-color: #269abc;
+    color: white;
+}
+.block-date {
+    float: left;
+    width: 20%;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.container {
+    height: 100%;
+}
+.check_item {
+    border-radius: 3%;
+    /*border: groove;*/
+    float: left;
+    text-align: center;
+    margin-left: 3%;
+    margin-top: 3%;
+    height: 100px;
+    background-color: #00b3ee;
+    box-shadow: -1px 1px 15px 1px #000;
+}
+.check_item:hover {
+    background-color: cyan;
+}
+.title-item {
+    margin-top: 20%;
+    font-weight: bold;
+    font-size: 150%;
+}
+.row_container {
+    background-color: whitesmoke;
+    /*text-align: center;*/
+    margin-top: 2%;
+    height: 75%;
+}
+.row-head {
+    background-color: whitesmoke;
+    /*text-align: center;*/
+    height: 20%;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+
+.modal-backdrop {
+    display: none;
 }

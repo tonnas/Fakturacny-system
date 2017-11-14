@@ -10,8 +10,8 @@ use yii\web\IdentityInterface;
 /**
  * User model
  *
- * @property integer $id_user
  * @property string $username
+ * @property string $role_name
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $email
@@ -32,7 +32,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function tableName()
     {
-        return '{{%FUSER}}';
+        return '{{%LOGIN}}';
     }
 
     /**
@@ -59,9 +59,21 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * @inheritdoc
      */
+    public function attributeLabels()
+    {
+        return [
+            'USERNAME' => 'Používateľské meno',
+            'PASSWORD' => 'Heslo',
+            'EMAIL'    => 'E-mail',
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public static function findIdentity($id)
     {
-        return static::findOne(['ID_USER' => $id, 'STATUS' => self::STATUS_ACTIVE]);
+        return static::findOne(['USERNAME' => $id, 'STATUS' => self::STATUS_ACTIVE]);
     }
 
     /**
