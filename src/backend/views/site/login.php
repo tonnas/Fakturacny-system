@@ -13,8 +13,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-login">
     <h1 style="text-align: center"><?= Html::encode($this->title) ?></h1>
     <br><br>
-    <div class="row">
-        <div class="col-lg-5 center">
+    <div class="row" >
+        <div class="center" style="max-width: 500px; width: 40%; min-width: 300px; margin-left: 30%">
             <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
                 <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>

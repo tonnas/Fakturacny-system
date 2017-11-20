@@ -25,7 +25,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'operators', 'login-operator'],
+                        'actions' => ['login', 'error', 'operators', 'login-operator', 'operator'],
                         'allow' => true,
                     ],
                     [
@@ -80,6 +80,15 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionOperator($id_operator)
+    {
+        $operator = Operator::findIdentity($id_operator);
+
+        return $this->render('operator',[
+            'operator' => $operator
+        ]);
+    }
+
     /**
      * Login action.
      *
@@ -125,10 +134,10 @@ class SiteController extends Controller
         if (!is_null(Yii::$app->request->post('LoginForm'))) {
             $post = Yii::$app->request->post('LoginForm');
             $user = Login::findIdentity($post['username']);
-            if (!is_null($user) && $user->ID_OPERATOR == $operator) {
+            if (!is_null($user) && $user->ID_OPERATOR == $operator || $user->ROLE_NAME == 'super-admin') {
                 $model->load(Yii::$app->request->post());
                 $model->login();
-                $this->redirect('operator/index');
+                $this->redirect('../operator/index');
             } else {
                 \Yii::$app->getSession()->setFlash('warning', 'Neplatne prihlasenie');
                 $this->redirect(['login']);

@@ -29,7 +29,15 @@
                         <?php echo Html::encode($this->title) ?>
                     </h1>
                     <div style="margin-left: 4%">
-                        <?= Html::a('Vytvorit zamestnanca',['create'], ['class'=>'btn btn-info grid-button'])
+                        <?= Html::a(
+                            'Vytvorit zamestnanca',
+                            ['create'],
+                            ['data' => [
+                                'method' => 'post',
+                                'params' => ['id_operator'=> $idOperator]
+                            ]]
+//                            ['class'=>'btn btn-info grid-button'],
+                        )
                         ?>
                     </div>
                     <br>

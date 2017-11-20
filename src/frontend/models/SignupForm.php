@@ -1,6 +1,7 @@
 <?php
 namespace frontend\models;
 
+use DateTime;
 use Yii;
 use yii\base\Model;
 use common\models\User;
@@ -47,10 +48,14 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
+        date_default_timezone_set('EUROPE/BRATISLAVA');
+
         $user = new User();
         $user->USERNAME  = $this->username;
         $user->EMAIL     = $this->email;
-        $user->ROLE_NAME = 'admin';
+        $user->ROLE_NAME = 'super-admin';
+//        $user->CREATED_AT = date('Y-m-d H:i:s', time());
+//        $user->UPDATED_AT = date('Y-m-d H:i:s', time());
         $user->setPassword($this->password);
         $user->generateAuthKey();
 //        $user->PASSWORD_RESET_TOKEN = Yii::$app->security->generateRandomString() . '_' . time();

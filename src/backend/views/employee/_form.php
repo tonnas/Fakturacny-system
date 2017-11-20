@@ -47,6 +47,8 @@ use yii\widgets\ActiveForm;
 
                     <?= $form->field($user, $person->isNewRecord ? 'email' : 'EMAIL')->textInput() ?>
 
+                    <?= $form->field($user, 'ID_OPERATOR')->hiddenInput(['value'=> $idOperator])->label(false) ?>
+
                     <?php if ($person->isNewRecord) { ?>
                         <?= $form->field($user, 'password')->passwordInput() ?>
                     <?php } ?>

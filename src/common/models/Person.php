@@ -62,4 +62,11 @@ class Person extends ActiveRecord
     {
         return $this->hasOne(User::classname(), ['USERNAME' => 'USERNAME']);
     }
+
+    public static function findOperatorEmployies($idOperator)
+    {
+        $ids = User::findOperatorEmployes($idOperator);
+
+        static::find()->where('');
+    }
 }

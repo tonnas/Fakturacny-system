@@ -41,15 +41,26 @@ class EmployeeController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PersonSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        Yii::$app->params['operator'] = 4;
+        dump(Yii::$app->params['operator']);
+        exit;
 
-        $model = Person::find()->all();
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'searchModel'  => $searchModel,
-            'model'        => $model,
-        ]);
+        $post = Yii::$app->request->post();
+        if (isset($post['id_operator'])) {
+            $searchModel = new PersonSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+//            $model = Person::findOperatorEmployies($post['id_operator']);
+            $model = Person::find()->all();
+            return $this->render('index', [
+                'dataProvider' => $dataProvider,
+                'searchModel'  => $searchModel,
+                'model'        => $model,
+                'idOperator'   => $post['id_operator']
+            ]);
+        }
+
+        return $this->redirect('../site/index');
     }
 
     /**
@@ -76,25 +87,35 @@ class EmployeeController extends Controller
      */
     public function actionCreate()
     {
-//        exit;
+        if (!is_null(Yii::$app->request->post('id_operator'))) {
+            $idOperator = Yii::$app->request->post('id_operator');
+        } else {
+            $this->redirect(['site/index']);
+        }
         if (!is_null(Yii::$app->request->post('SignupForm'))) {
             $signup = Yii::$app->request->post('SignupForm');
             $check_user = User::findByUsername($signup['username']);
             if (is_null($check_user)) {
-                $user = new SignupForm();
+                $user = new User();
                 $user->load(Yii::$app->request->post());
-                $user = $user->signup();
+                $user->USERNAME    = $signup['username'];
+                $user->EMAIL       = $signup['email'];
+                $user->ROLE_NAME   = 'employee';
+                $user->ID_OPERATOR = $signup['ID_OPERATOR'];
+                $user->setPassword($signup['password']);
+                $user->generateAuthKey();
+                $user = $user->save();
             } else {
                 $user = $check_user;
             }
             if (isset($user->USERNAME)) {
                 $data_person = Yii::$app->request->post('Person');
                 if (is_null(Person::findIdentity($data_person['IDENTIFICATION_NUMBER']))) {
-                    $person                = new Person();
-                    $person->USERNAME      = $user->USERNAME;
-                    $person->ID_ADDRESS    = 1;
-                    $person->LAST_NAME     = $data_person['LAST_NAME'];
-                    $person->FIRST_NAME    = $data_person['FIRST_NAME'];
+                    $person             = new Person();
+                    $person->USERNAME   = $user->USERNAME;
+                    $person->ID_ADDRESS = 1;
+                    $person->LAST_NAME  = $data_person['LAST_NAME'];
+                    $person->FIRST_NAME = $data_person['FIRST_NAME'];
                     $person->IDENTIFICATION_NUMBER   = $data_person['IDENTIFICATION_NUMBER'];
                     $employee                        = new Employee();
                     $employee->ID_OFFICE             = 1;
@@ -113,10 +134,11 @@ class EmployeeController extends Controller
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
-                'person'   => new Person(),
-                'user'     => new SignupForm(),
-                'address'  => new Address(),
-                'office'   => new Office()
+                'person'     => new Person(),
+                'user'       => new SignupForm(),
+                'address'    => new Address(),
+                'office'     => new Office(),
+                'idOperator' => $idOperator
             ]);
         }
 

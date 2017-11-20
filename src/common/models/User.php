@@ -127,6 +127,7 @@ class User extends ActiveRecord implements IdentityInterface
 
         $timestamp = (int) substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
+
         return $timestamp + $expire >= time();
     }
 
@@ -197,6 +198,14 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->PASSWORD_RESET_TOKEN = null;
+    }
+
+    public static function findOperatorEmployes($idOperator)
+    {
+        return static::find()
+            ->where(['ID_OPERATOR' => $idOperator])
+            ->andWhere(['ROLE_NAME' => 'employee'])
+            ->all();
     }
 
 }

@@ -2,6 +2,8 @@
 
 /* @var $this yii\web\View */
 
+use yii\helpers\Url;
+
 $this->title = 'Admin';
 ?>
 <!--<div class="site-index">-->
@@ -13,7 +15,7 @@ $this->title = 'Admin';
     </div>
     <div class="row" style="margin-top: 4%">
         <?php foreach ($operators as $operator) { ?>
-            <a href="#" class="operator-link">
+        <a href="<?= Url::to(['operator', 'id_operator' => $operator->ID_OPERATOR])?>" class="operator-link">
                 <div class="col col-lg-2 panel" >
                     <h3 class="operato-title"><?= $operator->NAME ?></h3>
                     <p style="margin-top: 30px"> Sem hodim napriklad pocet aktivnych cisiel, pocet zamestnancov, pobociek a podobne</p>
@@ -26,12 +28,12 @@ $this->title = 'Admin';
     .panel {
         text-align: center;
         width: calc(25% - 25px);
-        margin-left: 2%;
+        /*margin-left: 2%;*/
         background-color: whitesmoke;
         float: left;
         min-width: 250px;
         min-height: 250px;
-        /*margin: 8px 25px 0 0;*/
+        margin: 8px 25px 0 0;
     }
     .panel:hover {
         /*border-width: thin;*/
