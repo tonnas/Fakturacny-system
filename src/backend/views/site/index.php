@@ -6,41 +6,64 @@ use yii\helpers\Url;
 
 $this->title = 'Admin';
 ?>
-<!--<div class="site-index">-->
 <div class="container">
-    <div class="row row-head">
-        <div style="margin-left: 4%">
-            <h1>Administracia</h1>
-        </div>
-    </div>
     <div class="row" style="margin-top: 4%">
         <?php foreach ($operators as $operator) { ?>
         <a href="<?= Url::to(['operator', 'id_operator' => $operator->ID_OPERATOR])?>" class="operator-link">
-                <div class="col col-lg-2 panel" >
-                    <h3 class="operato-title"><?= $operator->NAME ?></h3>
-                    <p style="margin-top: 30px"> Sem hodim napriklad pocet aktivnych cisiel, pocet zamestnancov, pobociek a podobne</p>
+            <div class="panel">
+                <div class="panel-head">
+                    <div class="panel-head-text"><?= $operator->NAME ?></div>
                 </div>
-            <a>
+                <div class="panel-content">
+                    <table style="width:50%; margin-left: 25%; margin-top: 5%">
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>Zamestnanci:</td>
+                            <td><b><?= $opCounts[$operator->ID_OPERATOR]['countOfEmployee'] ?></b></td>
+                        </tr>
+                        <tr>
+                            <td>Zákazníci:</td>
+                            <td><b><?= $opCounts[$operator->ID_OPERATOR]['countOfCustomers'] ?></b></td>
+                        </tr>
+                        <tr>
+                            <td>Služby:</td>
+                            <td><b>0</b></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        <a>
         <?php } ?>
     </div>
 </div>
 <style>
     .panel {
-        text-align: center;
-        width: calc(25% - 25px);
-        /*margin-left: 2%;*/
-        background-color: whitesmoke;
+        border: 1px solid black;
+        /*text-align: center;*/
+        width: calc(32% - 25px);
+        /*background-color: white;*/
         float: left;
         min-width: 250px;
         min-height: 250px;
-        margin: 8px 25px 0 0;
+        margin: 8px 12px 12px 0;
+    }
+    .panel-head {
+        background-color: #0a0a0a;
+        color: white;
+        height: 30px;
+    }
+    .panel-head-text {
+        text-align: center;
+        font-size: 17px;
+        font-weight: bold;
     }
     .panel:hover {
         /*border-width: thin;*/
-        border-color: #00b3ee;
-    }
-    .operato-title {
-        margin-top: 40px;
+        border-color: #0b93d5;
     }
     .operator-link {
         text-decoration: none;

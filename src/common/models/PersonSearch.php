@@ -35,9 +35,9 @@ class PersonSearch extends Person
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $role, $idOperator)
     {
-        $query = Person::find();
+        $query = Person::find()->where(['ID_OPERATOR' => $idOperator])->andWhere(['ROLE_NAME' => $role]);
         $query->joinWith(['username', 'email']);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -48,14 +48,10 @@ class PersonSearch extends Person
 //            ],
         ]);
         $dataProvider->sort->attributes['username'] = [
-            // The tables are the ones our relation are configured to
-            // in my case they are prefixed with "tbl_"
             'asc' => ['USERNAME' => SORT_ASC],
             'desc' => ['USERNAME' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['email'] = [
-            // The tables are the ones our relation are configured to
-            // in my case they are prefixed with "tbl_"
             'asc' => ['EMAIL' => SORT_ASC],
             'desc' => ['EMAIL' => SORT_DESC],
         ];
@@ -64,6 +60,7 @@ class PersonSearch extends Person
         {
             return $dataProvider;
         }
+
         $query->andFilterWhere(['like','IDENTIFICATION_NUMBER', $this->IDENTIFICATION_NUMBER])
             ->andFilterWhere(['like', 'FIRST_NAME'            , $this->FIRST_NAME])
             ->andFilterWhere(['like', 'LAST_NAME'             , $this->LAST_NAME])

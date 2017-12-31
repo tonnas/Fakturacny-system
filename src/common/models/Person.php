@@ -8,6 +8,7 @@ use yii\db\ActiveRecord;
  *
  *
  * @property integer $identification_number
+ * @property string $username
  * @property string $first_name
  * @property string $last_name
  * @property string $id_address
@@ -65,8 +66,13 @@ class Person extends ActiveRecord
 
     public static function findOperatorEmployies($idOperator)
     {
-        $ids = User::findOperatorEmployes($idOperator);
+        $models = User::findOperatorEmployees($idOperator);
 
-        static::find()->where('');
+        $usernames = [];
+        foreach ($models as $model) {
+            $usernames[] = $model->USERNAME;
+        }
+
+        return static::findAll(['USERNAME' => $usernames]);
     }
 }

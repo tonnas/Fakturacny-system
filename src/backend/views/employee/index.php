@@ -66,17 +66,17 @@
                                 ],
                                 [
                                     'class' => 'yii\grid\ActionColumn',
-                                    'template'=>'{view}{update}{delete}',
+                                    'template'=>'{view}{update}',
                                     'buttons'=>[
                                         'view' => function ($url, $model) {
-                                            return Html::button('V', ['value' => $url,'class'=>'btn btn-xs btn-info grid-button modalButton']);
+                                            return Html::button('', ['value' => $url,'class'=>'btn btn-xs btn-info glyphicon glyphicon-open-eye']);
                                         },
                                         'update' => function ($url, $model) {
-                                            return Html::a('uprav', $url);
+                                            return Html::a('<span class="btn btn-xs btn-warning glyphicon glyphicon-cog"></span>', $url);
                                         },
-                                        'delete' => function ($url, $model) {
-                                            return Html::button('R', ['value' => $url,'class'=>'btn btn-xs btn-danger grid-button']);
-                                        },
+//                                        'delete' => function ($url, $model) {
+//                                            return Html::button('R', ['value' => $url,'class'=>'btn btn-xs btn-danger grid-button']);
+//                                        },
                                     ]
                                 ],
                             ],

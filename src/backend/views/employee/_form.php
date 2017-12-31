@@ -16,9 +16,10 @@ use yii\widgets\ActiveForm;
         <div class="container">
             <div class="row">
                 <div class="col col-lg-3 panel" >
-                    <h3>Zamestnanec</h3>
-
+                    <h3>Osobné údaje</h3>
+                    <div title="Musi obsahovat 10 cislic bez lomitka">
                     <?= $form->field($person, 'IDENTIFICATION_NUMBER')->textInput() ?>
+                    </div>
 
                     <?= $form->field($person, 'FIRST_NAME')->textInput() ?>
 
@@ -28,12 +29,16 @@ use yii\widgets\ActiveForm;
                 <div class="col col-lg-3 panel">
                     <h3>Adresa</h3>
 
-                    <?= $form->field($address, 'ID_CITY')->widget(\yii\jui\AutoComplete::classname(), [
-                        'clientOptions' => [
-                            'source' => \common\models\City::getAutocomleteData(),
-                            'options' => ['class' => 'form-control', 'z-index' => 100]
-                        ],
-                    ])->textInput() ?>
+                    <?= $form->field($address, 'ID_CITY')
+//                        ->widget(\yii\jui\AutoComplete::classname(),  [
+//                            'clientOptions' => [
+//                                'source' => \common\models\City::getAutocomleteData(),
+//                                'options' => [
+//                                    'class' => 'form-control',
+//                                ],
+//                            ],
+//                        ])
+                        ->textInput()->dropDownList(\common\models\City::getAutocomleteData(),['prompt'=>'']) ?>
 
                     <?= $form->field($address, 'STREET')->textInput() ?>
 
@@ -54,13 +59,16 @@ use yii\widgets\ActiveForm;
                     <?php } ?>
                 </div>
             </div>
-        </div>
-        <div class="container">
             <div class="row">
                 <div class="col col-lg-3 panel">
-                    <h3>Pobočka</h3>
+                    <h3>Telefónne číslo</h3>
 
-                    <?= $form->field($office, 'ID_OFFICE')->textInput() ?>
+                    <?= $form->field($phone, 'PHONE_NUMBER')->textInput() ?>
+
+                </div>
+                <div class="col col-lg-3 panel">
+                    <h3>Pobočka</h3>
+                    <?= $form->field($office, 'ID_OFFICE')->textInput(['value' => 'pobocka']) ?>
 
                 </div>
             </div>

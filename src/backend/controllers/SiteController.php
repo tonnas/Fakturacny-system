@@ -63,8 +63,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $operators = Operator::find()->all();
+        $opCounts  = [];
+        foreach ($operators as $operator) {
+            $opCounts[$operator->ID_OPERATOR]['countOfEmployee']  = Login::getCountOfEmployees($operator->ID_OPERATOR);
+            $opCounts[$operator->ID_OPERATOR]['countOfCustomers'] = Login::getCountOfCustomers($operator->ID_OPERATOR);
+        }
+
         return $this->render('index', [
-            'operators' => Operator::find()->all()
+            'operators' => Operator::find()->all(),
+            'opCounts'  => $opCounts
         ]);
     }
 
@@ -84,8 +92,14 @@ class SiteController extends Controller
     {
         $operator = Operator::findIdentity($id_operator);
 
+        $employeeCount = Login::getCountOfEmployees($operator->ID_OPERATOR);
+        $customerCount = Login::getCountOfCustomers($operator->ID_OPERATOR);
+
+
         return $this->render('operator',[
-            'operator' => $operator
+            'operator' => $operator,
+            'employeeCount' => $employeeCount,
+            'customerCount' => $customerCount,
         ]);
     }
 

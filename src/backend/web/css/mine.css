@@ -1,33 +1,47 @@
 .body {
     height: 100%;
     width: 100%;
+    overflow: hidden;
+    float: left;
+    background-color: #c9c9c9;
+    overflow-y: scroll;
 }
 .mine-sitebar {
-    width: 17%;
+    width: 10%;
     height: 100%;
     min-width: 160px;
     float: left;
-    background-color: #00b3ee;
+    /*background-color: #00b3ee;*/
+    background-color: #292929;
     position: fixed;
+}
+.mine-sitebar-hide {
+    width: 17%;
+    height: 1000%;
+    min-width: 160px;
+    float: left;
 }
 .mine-navbar {
     text-align: right;
-    width: 83%;
-    float: left;
-    height: 7%;
-    position: fixed;
-    margin-left: 17%;
+    width: 100%;
+    /*float: left;*/
+    background-color: #292929;
+    height: 5%;
+    position: absolute;
+    /*position: fixed;*/
+    /*margin-left: 17%;*/
 }
 .mine-content {
-    min-width: 520px;
+    min-width: 200px;
     border-radius: 1%;
     width: 80%;
     height:90%;
     float: left;
-    margin-left: 18.5%;
-    margin-top:7.8%;
-    overflow-y: scroll;
-    position: fixed;
+    /*margin-left: 2%;*/
+    margin-top:7.1%;
+    /*overflow-y: scroll;*/
+    /*position: fixed;*/
+    display: inline-block;
 }
 .mine-sitebar-item {
     height: 50px;
@@ -35,21 +49,20 @@
     /*background-color: whitesmoke;*/
 }
 .mine-sitebar-item:hover {
-    background-color: #269abc;
+    background-color: #0a0a0a;
 }
 .mine-sitebar-item-name {
     font-weight: bold;
     margin-left: 15px;
-    top: -30px;
+    /*top: -30px;*/
     color: white;
 }
 .mine-navbar-username {
     width: 100%;
     font-size: 120%;
-    margin-top: 7%;
     display: inline-block;
     text-align: center;
-    color: black;
+    color: white;
 }
 .mine-sitebar-head-name {
     border-bottom: white;
@@ -67,6 +80,7 @@
 .mine-navbar-username:hover {
 }
 .logout-button {
+    text-align: center;
     width: 15%;
     min-width: 140px;
     height: 100%;
@@ -74,8 +88,7 @@
     margin-right: 3%;
 }
 .logout-button:hover {
-    background-color: #269abc;
-    color: white;
+    background-color: black;
 }
 .block-date {
     float: left;

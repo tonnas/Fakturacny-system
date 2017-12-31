@@ -39,10 +39,27 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
     <div class="body">
+        <div class="mine-navbar">
+            <?php if (Yii::$app->user->isGuest) { ?>
+            <?php } else { ?>
+                <div class="sidebar-head">
+<!--                    <h3 class="mine-sitebar-head-name">FS</h3>-->
+                </div>
+<!--                <div class="block-date">-->
+<!--                    <b style="color: white">--><?//= date('Y-m-d') ?><!--</b>-->
+<!--                </div>-->
+
+                <a href="<?= Url::to(['site/logout']); ?>" data-method="post" style="text-decoration: none; color: white">
+                    <div class="logout-button">
+                        <div style="margin-top: 10px; font-weight: bold">
+                            <?= 'Logout'?>
+                        </div>
+                    </div>
+                </a>
+            <?php } ?>
+        </div>
         <div class="mine-sitebar">
-            <div class="sidebar-head">
-                <h3 class="mine-sitebar-head-name">FS</h3>
-            </div>
+            <div style="height: 7%"></div>
             <?php if (!Yii::$app->user->isGuest) { ?>
 
                 <a href="<?= Url::to(['site/index']); ?>" style="text-decoration: none">
@@ -52,34 +69,41 @@ AppAsset::register($this);
                         </div>
                     </div>
                 </a>
-                <a href="<?= Url::to(['employee/index']); ?>" style="text-decoration: none">
+                <a href="<?= Url::to(['role/index']); ?>" style="text-decoration: none">
                     <div class="mine-sitebar-item">
                         <div class="mine-sitebar-item-name">
-                            <span class="glyphicon glyphicon-list-alt"></span>  Zamestnanci
+                            <span class="glyphicon glyphicon-lock"></span>  Role
                         </div>
                     </div>
                 </a>
-                <a href="<?= Url::to(['customer/index']); ?>" style="text-decoration: none">
-                    <div class="mine-sitebar-item">
-                        <div class="mine-sitebar-item-name">
-                            <span class="glyphicon glyphicon-user"></span>  Zakaznici
-                        </div>
-                    </div>
-                </a>
-                <a href="<?= Url::to(['invoice/index']); ?>" style="text-decoration: none">
-                    <div class="mine-sitebar-item">
-                        <div class="mine-sitebar-item-name">
-                            <span class="glyphicon glyphicon-calendar"></span>  Faktury
-                        </div>
-                    </div>
-                </a>
-    <!--            <a href="--><?//= Url::to(['site/index']); ?><!--" style="text-decoration: none">-->
-    <!--                <div class="mine-sitebar-item">-->
-    <!--                    <div class="mine-sitebar-item-name">-->
-    <!--                        <span class="glyphicon glyphicon-home"></span>  Sluzbykriminolo-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--            </a>-->
+<!--                <a href="--><?//= Url::to(['number/index']); ?><!--" style="text-decoration: none">-->
+<!--                    <div class="mine-sitebar-item">-->
+<!--                        <div class="mine-sitebar-item-name">-->
+<!--                            <span class="glyphicon glyphicon-earphone"></span>  T.čísla-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="--><?php//= Url::to(['employee/index']); ?><!--" style="text-decoration: none">-->
+<!--                    <div class="mine-sitebar-item">-->
+<!--                        <div class="mine-sitebar-item-name">-->
+<!--                            <span class="glyphicon glyphicon-list-alt"></span>  Zamestnanci-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="--><?php//= Url::to(['customer/index']); ?><!--" style="text-decoration: none">-->
+<!--                    <div class="mine-sitebar-item">-->
+<!--                        <div class="mine-sitebar-item-name">-->
+<!--                            <span class="glyphicon glyphicon-user"></span>  Zakaznici-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="--><?php//= Url::to(['invoice/index']); ?><!--" style="text-decoration: none">-->
+<!--                    <div class="mine-sitebar-item">-->
+<!--                        <div class="mine-sitebar-item-name">-->
+<!--                            <span class="glyphicon glyphicon-calendar"></span>  Faktury-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </a>-->
                 <a href="<?= Url::to(['site/index']); ?>" style="text-decoration: none">
                     <div class="mine-sitebar-item">
                         <div class="mine-sitebar-item-name">
@@ -98,48 +122,20 @@ AppAsset::register($this);
                 <a href="<?= Url::to(['site/operators']); ?>" style="text-decoration: none">
                     <div class="mine-sitebar-item">
                         <div class="mine-sitebar-item-name">
-                            <span class="glyphicon glyphicon-list-alt"></span>  Operatory
+                            <span class="glyphicon glyphicon-list-alt"></span>  Operator
                         </div>
                     </div>
                 </a>
             <?php } ?>
         </div>
-        <div class="mine-navbar">
-            <?php
-            if (Yii::$app->user->isGuest) {
-                ?>
-                <?php
-            } else {
-                ?>
-                <div class="block-date">
-                    <b style="width:60%; margin-top: 5%; display: inline-block; font-size: 15px"><?= date('Y-m-d') ?></b>
-                </div>
-
-                <a href="<?= Url::to(['siite/logout']); ?>" style="text-decoration: none">
-                    <div class="logout-button">
-
-                        <b class="mine-navbar-username">
-                            <?=
-                                Html::beginForm(['/site/logout'], 'post')
-                                . Html::submitButton(
-                                    'Logout (' . Yii::$app->user->identity->USERNAME . ')',
-                                    ['class' => 'btn btn-link logout']
-                                )
-                                . Html::endForm()
-                            ?>
-                        </b>
-                    </div>
-                </a>
-                <?php
-            }
-            ?>
-        </div>
+        <div class="mine-sitebar-hide"></div>
         <div class="mine-content">
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
             <?= Alert::widget() ?>
             <?= $content ?>
+            <div style="height: 150px"></div>
         </div>
     </div>
 <!--    <div class="mine-footer"></div>-->

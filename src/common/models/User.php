@@ -200,12 +200,30 @@ class User extends ActiveRecord implements IdentityInterface
         $this->PASSWORD_RESET_TOKEN = null;
     }
 
-    public static function findOperatorEmployes($idOperator)
+    public static function findOperatorEmployees($idOperator)
     {
         return static::find()
             ->where(['ID_OPERATOR' => $idOperator])
             ->andWhere(['ROLE_NAME' => 'employee'])
             ->all();
+    }
+
+    public static function getCountOfEmployees($idOperator)
+    {
+        return static::find()
+            ->select(['COUNT(*) AS cnt'])
+            ->where(['ID_OPERATOR' => $idOperator])
+            ->andWhere(['ROLE_NAME' => 'employee'])
+            ->count();
+    }
+
+    public static function getCountOfCustomers($idOperator)
+    {
+        return static::find()
+            ->select(['COUNT(*) AS cnt'])
+            ->where(['ID_OPERATOR' => $idOperator])
+            ->andWhere(['ROLE_NAME' => 'customer'])
+            ->count();
     }
 
 }

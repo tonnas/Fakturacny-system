@@ -6,6 +6,7 @@ use common\models\City;
 use common\models\Employee;
 use common\models\Office;
 use common\models\PersonSearch;
+use common\models\PhoneNumber;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
@@ -41,26 +42,17 @@ class EmployeeController extends Controller
      */
     public function actionIndex()
     {
-        Yii::$app->params['operator'] = 4;
-        dump(Yii::$app->params['operator']);
-        exit;
+        $searchModel = new PersonSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'employee', 1);
 
-        $post = Yii::$app->request->post();
-        if (isset($post['id_operator'])) {
-            $searchModel = new PersonSearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = Person::findOperatorEmployies(1);
 
-//            $model = Person::findOperatorEmployies($post['id_operator']);
-            $model = Person::find()->all();
-            return $this->render('index', [
-                'dataProvider' => $dataProvider,
-                'searchModel'  => $searchModel,
-                'model'        => $model,
-                'idOperator'   => $post['id_operator']
-            ]);
-        }
-
-        return $this->redirect('../site/index');
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'searchModel'  => $searchModel,
+            'model'        => $model,
+            'idOperator'   => 1
+        ]);
     }
 
     /**
@@ -94,8 +86,8 @@ class EmployeeController extends Controller
         }
         if (!is_null(Yii::$app->request->post('SignupForm'))) {
             $signup = Yii::$app->request->post('SignupForm');
-            $check_user = User::findByUsername($signup['username']);
-            if (is_null($check_user)) {
+            $user = User::findByUsername($signup['username']);
+            if (is_null($user)) {
                 $user = new User();
                 $user->load(Yii::$app->request->post());
                 $user->USERNAME    = $signup['username'];
@@ -104,10 +96,10 @@ class EmployeeController extends Controller
                 $user->ID_OPERATOR = $signup['ID_OPERATOR'];
                 $user->setPassword($signup['password']);
                 $user->generateAuthKey();
-                $user = $user->save();
-            } else {
-                $user = $check_user;
+                $user->save();
+                $user = User::findByUsername($signup['username']);
             }
+
             if (isset($user->USERNAME)) {
                 $data_person = Yii::$app->request->post('Person');
                 if (is_null(Person::findIdentity($data_person['IDENTIFICATION_NUMBER']))) {
@@ -117,20 +109,26 @@ class EmployeeController extends Controller
                     $person->LAST_NAME  = $data_person['LAST_NAME'];
                     $person->FIRST_NAME = $data_person['FIRST_NAME'];
                     $person->IDENTIFICATION_NUMBER   = $data_person['IDENTIFICATION_NUMBER'];
+                    $person_save = $person->save();
                     $employee                        = new Employee();
                     $employee->ID_OFFICE             = 1;
                     $employee->IDENTIFICATION_NUMBER = $person->IDENTIFICATION_NUMBER;
                     $employee->VALID_FROM            = 1;
+                    $employee->save();
+                    $phone_number = new PhoneNumber();
+                    $phone_number->IDENTIFICATION_NUMBER = $person->IDENTIFICATION_NUMBER;
+                    $phone_number->PHONE_NUMBER = Yii::$app->request->post('PhoneNumber')['PHONE_NUMBER'];
+                    $phone_number->save();
 
-                    if ($person->save()) {
-                        \Yii::$app->getSession()->setFlash('success', 'Úspešne uložený používateľ');
+                    if ($person_save) {
+                        \Yii::$app->getSession()->setFlash('success', 'Úspešne uložený zamestnanec');
                     } else {
-                        \Yii::$app->getSession()->setFlash('warning', 'Nepodarilo sa uložiť nového používateľa');
+                        \Yii::$app->getSession()->setFlash('warning', 'Nepodarilo sa uložiť nového zamestnanca');
                     }
                     return $this->redirect(['index']);
                 }
             }
-            \Yii::$app->getSession()->setFlash('warning', 'Osobu s týmto rodným číslom už v databáze máme');
+            \Yii::$app->getSession()->setFlash('warning', 'Zamestnanca s týmto rodným číslom už v databáze máme');
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
@@ -138,6 +136,7 @@ class EmployeeController extends Controller
                 'user'       => new SignupForm(),
                 'address'    => new Address(),
                 'office'     => new Office(),
+                'phone'      => new PhoneNumber(),
                 'idOperator' => $idOperator
             ]);
         }
@@ -151,32 +150,24 @@ class EmployeeController extends Controller
     public function actionUpdate($id)
     {
         $person  = Person::findIdentity($id);
-        $address = Address::findIdentity($person->ID_ADDRESS);
         if (!is_null($person)) {
+            $address = Address::findIdentity($person->ID_ADDRESS);
+            $phone   = PhoneNumber::findAll(['IDENTIFICATION_NUMBER' => $person->IDENTIFICATION_NUMBER]);
             $user = User::findIdentity($person->USERNAME);
-            if (!is_null($user)) {
-                if (!is_null(Yii::$app->request->post('User'))) {
-                    $user->USERNAME = Yii::$app->request->post('User')['USERNAME'];
-                    $user->EMAIL    = Yii::$app->request->post('User')['EMAIL'];
-                    $user->update();
-                    $data_person = Yii::$app->request->post('Person');
-                    $person->IDENTIFICATION_NUMBER = $data_person['IDENTIFICATION_NUMBER'];
-                    $person->LAST_NAME  = $data_person['LAST_NAME'];
-                    $person->CITY       = $data_person['CITY'];
-                    $person->STREET     = $data_person['STREET'];
-                    $person->FIRST_NAME = $data_person['FIRST_NAME'];
-                    $person->POST_CODE  = $data_person['POST_CODE'];
-                    $person->update();
-                    \Yii::$app->getSession()->setFlash('success', 'Používateľ uspesne upraveny');
-
-                    return $this->redirect(['index']);
-                }
-            } else {
-                \Yii::$app->getSession()->setFlash('warning', 'Nenasiel som hladanu osobu');
-                return $this->redirect(['index']);
-            }
         } else {
             \Yii::$app->getSession()->setFlash('warning', 'Nenasiel som hladanu osobu');
+            return $this->redirect(['index']);
+        }
+
+        if (!is_null(Yii::$app->request->post('User'))) {
+            \Yii::$app->getSession()->setFlash('success', 'Používateľ uspesne upraveny');
+
+            return $this->redirect(['index']);
+        }
+
+        if (!isset($phone[0])) {
+            \Yii::$app->getSession()->setFlash('warning', 'Zamestnanec nie je spravne ulozeny');
+
             return $this->redirect(['index']);
         }
 
@@ -184,9 +175,44 @@ class EmployeeController extends Controller
             'person'  => $person,
             'user'    => $user,
             'address' => $address,
-            'office'  => new Office()
+            'phone'   => $phone[0],
+            'office'  => new Office(),
+            'idOperator' => Yii::$app->params['operator']
 
         ]);
+
+//        if (!is_null($person)) {
+//            $user = User::findIdentity($person->USERNAME);
+//            if (!is_null($user)) {
+//                if (!is_null(Yii::$app->request->post('User'))) {
+//                    $user->USERNAME = Yii::$app->request->post('User')['USERNAME'];
+//                    $user->EMAIL    = Yii::$app->request->post('User')['EMAIL'];
+//                    $user->update();
+//
+//                    $data_person = Yii::$app->request->post('Person');
+//                    $person->USERNAME   = Yii::$app->request->post('User')['USERNAME'];
+//                    $person->ID_ADDRESS = 1;
+//                    $person->LAST_NAME  = $data_person['LAST_NAME'];
+//                    $person->FIRST_NAME = $data_person['FIRST_NAME'];
+//                    $person->IDENTIFICATION_NUMBER   = $data_person['IDENTIFICATION_NUMBER'];
+//                    $person->update();
+////                    $employee->ID_OFFICE             = 1;
+////                    $employee->IDENTIFICATION_NUMBER = $person->IDENTIFICATION_NUMBER;
+////                    $employee->VALID_FROM            = 1;
+//                    \Yii::$app->getSession()->setFlash('success', 'Používateľ uspesne upraveny');
+//
+//                    return $this->redirect(['index']);
+//                }
+//            } else {
+//                \Yii::$app->getSession()->setFlash('warning', 'Nenasiel som hladanu osobu');
+//                return $this->redirect(['index']);
+//            }
+//        } else {
+//            \Yii::$app->getSession()->setFlash('warning', 'Nenasiel som hladanu osobu');
+//            return $this->redirect(['index']);
+//        }
+
+
 
     }
 

@@ -9,45 +9,34 @@ $this->title = 'Admin';
 ?>
 <!--<div class="site-index">-->
 <div class="container">
-    <div class="row row-head">
-        <div style="margin-left: 4%">
+    <div class="row">
+<!--    <div class="row row-head">-->
+<!--        <div style="margin-left: 4%">-->
             <h1><?= $operator->NAME?></h1>
-        </div>
+<!--        </div>-->
     </div>
     <div class="row" style="margin-top: 4%">
-        <?= Html::a('<div class="col col-lg-2 panel operator-link" ><h2 class="operato-title">Zamestnanci</h2><b><p style="margin-top: 30px; font-size: 20px">27 zamestnancov</p></b></div>',
-            ['employee/index'],
-            ['data' => [
-                'method' => 'post',
-                'params' =>
-                    ['id_operator'=> $operator->ID_OPERATOR],
-            ]])
+        <?= Html::a('<div class="col col-lg-2 panel operator-link" >'
+                        .'<h2 class="operato-title ">'
+                        .'<span class="glyphicon glyphicon-briefcase"></span> Zamestnanci'
+                        .'</h2>'
+                        .'<b><p style="margin-top: 30px; font-size: 20px"><h2>' .$employeeCount.'</h2></p></b>'
+                      .' </div>',
+            ['employee/index']
+        )
         ?>
-        <?= Html::a('<div class="col col-lg-2 panel operator-link" ><h2 class="operato-title">Zakaznici</h2><b><p style="margin-top: 30px; font-size: 20px">112 zakaznikov</p></b></div>',
-            ['employee/index'],
-            ['data' => [
-                'method' => 'post',
-                'params' =>
-                    ['id_operator'=> $operator->ID_OPERATOR],
-            ]])
+        <?= Html::a('<div class="col col-lg-2 panel operator-link" ><h2 class="operato-title"><span class="glyphicon glyphicon-user"></span> Zákazníci</h2><b><p style="margin-top: 30px; font-size: 20px"><h2>' .$customerCount.'</h2></p></b></div>',
+            ['customer/index']
+        )
         ?>
-
-<!--        <a href="" class="operator-link">-->
-<!--            <div class="col col-lg-2 panel" >-->
-<!--                <h2 class="operato-title">Zakaznici</h2>-->
-<!--                <b>-->
-<!--                    <p style="margin-top: 30px; font-size: 20px">754 zakaznikov</p>-->
-<!--                </b>-->
-<!--            </div>-->
-<!--        <a>-->
-<!--        <a href="" class="operator-link">-->
-<!--            <div class="col col-lg-2 panel" >-->
-<!--                <h2 class="operato-title">Sluzby</h2>-->
-<!--                <b>-->
-<!--                    <p style="margin-top: 30px; font-size: 20px">14 sluzieb</p>-->
-<!--                </b>-->
-<!--            </div>-->
-<!--        <a>-->
+        <?= Html::a('<div class="col col-lg-2 panel operator-link" ><h2 class="operato-title"><span class="glyphicon glyphicon-list-alt"></span> Služby</h2><b><p style="margin-top: 30px; font-size: 20px"><h2>0</h2></p></b></div>',
+            ['service/index']
+        )
+        ?>
+        <?= Html::a('<div class="col col-lg-2 panel operator-link" ><h2 class="operato-title"><span class="glyphicon glyphicon-earphone"></span> Tel. cisla</h2><b><p style="margin-top: 30px; font-size: 20px"><h2>0</h2></p></b></div>',
+            ['number/index']
+        )
+        ?>
     </div>
 </div>
 

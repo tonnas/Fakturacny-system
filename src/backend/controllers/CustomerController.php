@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use common\models\Address;
 use common\models\PersonSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -38,13 +39,14 @@ class CustomerController extends Controller
     public function actionIndex()
     {
         $searchModel = new PersonSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,'customer', 1);
 
         $model = Person::find()->all();
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'searchModel'  => $searchModel,
             'model'        => $model,
+            'idOperator'   => Yii::$app->params['operator']
         ]);
     }
 
@@ -61,7 +63,7 @@ class CustomerController extends Controller
             \Yii::$app->getSession()->setFlash('warning', 'Nenasiel som hladanu osobu');
             return $this->redirect(['index']);
         }
-        return $this->renderAjax('view', [
+        return $this->render('view', [
             'person' => $person,
             'user'   => $user
         ]);
@@ -105,9 +107,11 @@ class CustomerController extends Controller
             \Yii::$app->getSession()->setFlash('warning', 'Osobu s týmto rodným číslom už v databáze máme');
             return $this->redirect(['index']);
         } else {
-            return $this->renderAjax('create', [
-                'person' => new Person(),
-                'user'   => new SignupForm(),
+            return $this->render('create', [
+                'person'     => new Person(),
+                'user'       => new SignupForm(),
+                'address'    => new Address(),
+                'idOperator'   => Yii::$app->params['operator']
             ]);
         }
 

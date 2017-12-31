@@ -9,48 +9,72 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="comment-form">
+<div class="employee-form">
 
     <?php $form = ActiveForm::begin(['id' => 'form-create']); ?>
 
-        <div class="container">
-            <div class="row">
-                <div class="col col-lg-5">
-                    <h3>Osoba</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col col-lg-3 panel">
+                <h3>Používateľský účet</h3>
 
-                    <?= $form->field($person, 'IDENTIFICATION_NUMBER')->textInput() ?>
+                <?= $form->field($user, $person->isNewRecord ? 'username' : 'USERNAME')->textInput() ?>
 
-                    <?= $form->field($person, 'FIRST_NAME')->textInput() ?>
+                <?= $form->field($user, $person->isNewRecord ? 'email' : 'EMAIL')->textInput() ?>
 
-                    <?= $form->field($person, 'LAST_NAME')->textInput() ?>
+                <?= $form->field($user, 'ID_OPERATOR')->hiddenInput(['value'=> $idOperator])->label(false) ?>
 
-                    <?= $form->field($person, 'CITY')->textInput() ?>
-
-                    <?= $form->field($person, 'POST_CODE')->textInput() ?>
-
-                    <?= $form->field($person, 'STREET')->textInput() ?>
-
-                </div>
-                <div class="col col-lg-4">
-                    <h3>Pouzivatelsky ucet</h3>
-
-                    <?= $form->field($user, 'username')->textInput() ?>
-
-                    <?= $form->field($user, 'email')->textInput() ?>
-
+                <?php if ($person->isNewRecord) { ?>
                     <?= $form->field($user, 'password')->passwordInput() ?>
+                <?php } ?>
+            </div>
+            <div class="col col-lg-3 panel" >
+                <h3>Osobné údaje</h3>
 
-                </div>
+                <?= $form->field($person, 'IDENTIFICATION_NUMBER')->textInput() ?>
+
+                <?= $form->field($person, 'FIRST_NAME')->textInput() ?>
+
+                <?= $form->field($person, 'LAST_NAME')->textInput() ?>
+
+            </div>
+            <div class="col col-lg-3 panel">
+                <h3>Adresa</h3>
+
+                <?= $form->field($address, 'ID_CITY')->widget(\yii\jui\AutoComplete::classname(), [
+                    'clientOptions' => [
+                        'source' => \common\models\City::getAutocomleteData(),
+                        'options' => ['class' => 'form-control', 'z-index' => 100]
+                    ],
+                ])->textInput() ?>
+
+                <?= $form->field($address, 'STREET')->textInput() ?>
+
+                <?= $form->field($address, 'STREET_NUMBER')->textInput() ?>
 
             </div>
         </div>
 
-
-
         <div class="form-group">
-            <?= Html::submitButton('Vytvorit zamestnanca', ['class' => 'btn btn-success', 'name' => 'create-button']) ?>
+            <?= Html::submitButton($person->isNewRecord ? 'Vytvorit zamestnanca' : 'Upraviť zamestnanca',
+                ['class' => 'btn btn-success', 'name' => 'create-button']) ?>
         </div>
+    </div>
 
     <?php ActiveForm::end(); ?>
 
 </div>
+<style>
+    .panel {
+        width: calc(33% - 25px);
+        margin-left: 2%;
+        background-color: whitesmoke;
+        float: left;
+        min-width: 350px;
+        /*margin: 8px 25px 0 0;*/
+    }
+    .panel:hover {
+        /*border-width: thin;*/
+        border-color: #00b3ee;
+    }
+</style>
