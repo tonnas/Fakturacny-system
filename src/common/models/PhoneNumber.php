@@ -45,4 +45,23 @@ class PhoneNumber extends ActiveRecord
             'PHONE_NUMBER' => 'Telefónne číslo',
         ];
     }
+
+    public static function getOperatorNumbers($operator)
+    {
+        $numbers = self::find()->all();
+        $data = [];
+        foreach ($numbers as $number) {
+            $data[$number->PHONE_NUMBER] = $number->PHONE_NUMBER;
+        }
+
+        return $data;
+    }
+
+    public static function getOperatorNumbersCount($idOperator)
+    {
+        return static::find()
+            ->select(['COUNT(*) AS cnt'])
+//            ->where(['ID_OPERATOR' => $idOperator])
+            ->count();
+    }
 }

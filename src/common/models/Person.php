@@ -29,7 +29,9 @@ class Person extends ActiveRecord
     public function rules()
     {
         return [
-            [['IDENTIFICATION_NUMBER', 'FIRST_NAME', 'LAST_NAME'], 'required'],
+            [['IDENTIFICATION_NUMBER','FIRST_NAME', 'LAST_NAME'], 'required'],
+            [['IDENTIFICATION_NUMBER'], 'string','length' => 10,'message' => 'Musis obsahovat 10 cislic, bez lomitka',
+            ]
         ];
     }
 

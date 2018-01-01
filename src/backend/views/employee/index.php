@@ -1,22 +1,23 @@
 <?php
 
-    use yii\helpers\Html;
-    use yii\grid\GridView;
-    use yii\helpers\Url;
-    use yii\bootstrap\Modal;
-    use yii\widgets\Pjax;
+use yii\helpers\Html;
+use yii\grid\GridView;
+use yii\helpers\Url;
+use yii\bootstrap\Modal;
+use yii\widgets\Pjax;
 
-    /* @var $this yii\web\View */
+/* @var $this yii\web\View */
 
-    $this->title = 'Zamestnanci';
-    $this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Zamestnanci';
+$this->params['breadcrumbs'][] = ['label' => 'Operator', 'url' => ['site/operator', 'id_operator' => 1]];
+$this->params['breadcrumbs'][] = $this->title;
 
-    Modal::begin([
-        'id'=>'modal',
-        'size'=>'modal-lg',
-    ]);
-    echo "<div id='modalContent'></div>";
-    Modal::end();
+Modal::begin([
+    'id'=>'modal',
+    'size'=>'modal-lg',
+]);
+echo "<div id='modalContent'></div>";
+Modal::end();
 
 ?>
 <div class="site-index">
@@ -35,9 +36,7 @@
                             ['data' => [
                                 'method' => 'post',
                                 'params' => ['id_operator'=> $idOperator]
-                            ]]
-//                            ['class'=>'btn btn-info grid-button'],
-                        )
+                            ]])
                         ?>
                     </div>
                     <br>
@@ -66,17 +65,11 @@
                                 ],
                                 [
                                     'class' => 'yii\grid\ActionColumn',
-                                    'template'=>'{view}{update}',
+                                    'template'=>'{update}',
                                     'buttons'=>[
-                                        'view' => function ($url, $model) {
-                                            return Html::button('', ['value' => $url,'class'=>'btn btn-xs btn-info glyphicon glyphicon-open-eye']);
-                                        },
                                         'update' => function ($url, $model) {
-                                            return Html::a('<span class="btn btn-xs btn-warning glyphicon glyphicon-cog"></span>', $url);
+                                            return Html::a('<span class="btn btn-info"><b>Upravit</b></span>', $url);
                                         },
-//                                        'delete' => function ($url, $model) {
-//                                            return Html::button('R', ['value' => $url,'class'=>'btn btn-xs btn-danger grid-button']);
-//                                        },
                                     ]
                                 ],
                             ],

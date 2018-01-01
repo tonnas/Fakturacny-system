@@ -3,6 +3,7 @@ namespace common\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\db\Query;
 
 
 class Role extends ActiveRecord
@@ -39,7 +40,12 @@ class Role extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'Name' => 'Meno'
+            'NAME' => 'Meno'
         ];
+    }
+
+    public static function getPermissions($role)
+    {
+        return Permission::findAll(['ROLE_NAME' => $role]);
     }
 }

@@ -5,6 +5,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\Query;
 use yii\web\IdentityInterface;
 
 /**
@@ -25,7 +26,6 @@ class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
-
 
     /**
      * @inheritdoc
@@ -202,18 +202,24 @@ class User extends ActiveRecord implements IdentityInterface
 
     public static function findOperatorEmployees($idOperator)
     {
+        $employeeQuery = (new Query())->select('USERNAME')->from('PERSON')
+            ->join('LEFT JOIN', 'EMPLOYEE', 'PERSON.IDENTIFICATION_NUMBER = EMPLOYEE.IDENTIFICATION_NUMBER');
+
         return static::find()
             ->where(['ID_OPERATOR' => $idOperator])
-            ->andWhere(['ROLE_NAME' => 'employee'])
+            ->andWhere(['USERNAME' => $employeeQuery])
             ->all();
     }
 
     public static function getCountOfEmployees($idOperator)
     {
+        $employeeQuery = (new Query())->select('USERNAME')->from('PERSON')
+            ->join('LEFT JOIN', 'EMPLOYEE', 'PERSON.IDENTIFICATION_NUMBER = EMPLOYEE.IDENTIFICATION_NUMBER');
+
         return static::find()
             ->select(['COUNT(*) AS cnt'])
             ->where(['ID_OPERATOR' => $idOperator])
-            ->andWhere(['ROLE_NAME' => 'employee'])
+            ->andWhere(['USERNAME' => $employeeQuery])
             ->count();
     }
 

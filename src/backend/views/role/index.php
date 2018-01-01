@@ -22,34 +22,52 @@
                         <?php echo Html::encode($this->title) ?>
                     </h1>
                     <br>
-                    <div style="margin-left: 4%">
-                        <?= Html::button(
-                            'Vytvorit rolu', [
-                                'value' => Url::to(['create-role']),
-                                'class'=>'btn btn-xs btn-info grid-button modalButton'
-                            ]
-                        ) ?>
-                    </div>
-                    <br>
-                    <div style="width: 98%; margin-left: 1%">
-<!--                        --><?php //Pjax::begin(); ?>
-                        <?= GridView::widget([
-                            'dataProvider' => $dataProvider,
-                            'options' => ['style' => 'max-height:30px;',
-                                'max-width:10px;'],
-                            'summary' => '<br>',
-                            'columns' => [
-                                [
-                                    'attribute'=>'NAME',
-                                    'format'=>'raw',
-                                    'value' => function($data)
-                                    {
-                                        return Html::a($data->NAME, ['view', 'id' => $data->NAME], ['title' => 'Zobraziť detail pre rolu ' . $data->NAME]);
-                                    }
-                                ],
-                            ],
-                        ]); ?>
-<!--                        --><?php //Pjax::end(); ?>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div style="width: 85%; margin-left: 8%">
+                                <?= Html::button(
+                                    'Vytvorit rolu', [
+                                        'value' => Url::to(['create-role']),
+                                        'class'=>'btn btn-info grid-button modalButton'
+                                    ]
+                                ) ?>
+                                <?= GridView::widget([
+                                    'dataProvider' => $dataProvider,
+                                    'options' => ['style' => 'max-height:30px;',
+                                        'max-width:10px;'],
+                                    'summary' => '<br>',
+                                    'columns' => [
+                                        [
+                                            'attribute'=>'NAME',
+                                            'format'=>'raw',
+                                            'value' => function($data)
+                                            {
+                                                return Html::a($data->NAME, ['update', 'id' => $data->NAME], ['title' => 'Zobraziť detail pre rolu ' . $data->NAME]);
+                                            }
+                                        ],
+                                    ],
+                                ]); ?>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div style="width: 85%; margin-left: 8%">
+                            <?= Html::button(
+                                'Vytvorit opravnenie', [
+                                    'value' => Url::to(['create-permission']),
+                                    'class'=>'btn btn-info grid-button modalButton'
+                                ]
+                            ) ?>
+                            <?= GridView::widget([
+                                'dataProvider' => $dataPermissions,
+                                'options' => ['style' => 'max-height:30px;',
+                                    'max-width:10px;'],
+                                'summary' => '<br>',
+                                'columns' => [
+                                    'NAME'
+                                ]
+                            ]); ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

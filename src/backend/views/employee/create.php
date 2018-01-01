@@ -1,5 +1,6 @@
 <?php
 
+use common\models\PhoneNumber;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -15,8 +16,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'user'    => $user,
         'address' => $address,
         'office'  => $office,
-        'phone'  => $phone,
-        'idOperator' => $idOperator
+        'phone'   => $phone,
+        'idOperator'   => $idOperator,
+        'roles'        => $roles,
+        'phoneNumbers' => PhoneNumber::getOperatorNumbers(1)
     ]) ?>
 
 </div>

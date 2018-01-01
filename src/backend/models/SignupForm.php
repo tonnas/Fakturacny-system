@@ -13,6 +13,7 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
+    public $role_name;
 
     /**
      * @inheritdoc
@@ -42,9 +43,10 @@ class SignupForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => 'Používateľské meno',
-            'password' => 'Heslo',
-            'email'    => 'E-mail',
+            'username'  => 'Používateľské meno',
+            'password'  => 'Heslo',
+            'email'     => 'E-mail',
+            'role_name' => 'Meno role',
         ];
     }
 
@@ -61,7 +63,7 @@ class SignupForm extends Model
         $user = new User();
         $user->USERNAME   = $this->username;
         $user->EMAIL      = $this->email;
-        $user->ROLE_NAME  = 'employee';
+        $user->ROLE_NAME  = $this->role_name;
         $user->setPassword($this->password);
         $user->generateAuthKey();
 

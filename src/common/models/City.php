@@ -59,7 +59,7 @@ class City extends ActiveRecord
         $cities = self::find()->all();
         $data = [];
         foreach ($cities as $city) {
-            $data[] = $city->PSC . ' ' . $city->NAME;
+            $data[$city->ID_CITY] = $city->PSC . ' ' . $city->NAME;
         }
 
         return $data;

@@ -17,11 +17,11 @@ $this->title = 'Admin';
     </div>
     <div class="row" style="margin-top: 4%">
         <?= Html::a('<div class="col col-lg-2 panel operator-link" >'
-                        .'<h2 class="operato-title ">'
-                        .'<span class="glyphicon glyphicon-briefcase"></span> Zamestnanci'
-                        .'</h2>'
-                        .'<b><p style="margin-top: 30px; font-size: 20px"><h2>' .$employeeCount.'</h2></p></b>'
-                      .' </div>',
+                .'<h2 class="operato-title ">'
+                .'<span class="glyphicon glyphicon-briefcase"></span> Zamestnanci'
+                .'</h2>'
+                .'<b><p style="margin-top: 30px; font-size: 20px"><h2>' .$employeeCount.'</h2></p></b>'
+                .' </div>',
             ['employee/index']
         )
         ?>
@@ -33,8 +33,12 @@ $this->title = 'Admin';
             ['service/index']
         )
         ?>
-        <?= Html::a('<div class="col col-lg-2 panel operator-link" ><h2 class="operato-title"><span class="glyphicon glyphicon-earphone"></span> Tel. cisla</h2><b><p style="margin-top: 30px; font-size: 20px"><h2>0</h2></p></b></div>',
+        <?= Html::a('<div class="col col-lg-2 panel operator-link" ><h2 class="operato-title"><span class="glyphicon glyphicon-earphone"></span> Tel. cisla</h2><b><p style="margin-top: 30px; font-size: 20px"><h2>'.$numberCount.'</h2></p></b></div>',
             ['number/index']
+        )
+        ?>
+        <?= Html::a('<div class="col col-lg-2 panel operator-link" ><h2 class="operato-title"><span class="glyphicon glyphicon-home"></span> Pobocky</h2><b><p style="margin-top: 30px; font-size: 20px"><h2>'.$officiesCount.'</h2></p></b></div>',
+            ['operator/office']
         )
         ?>
     </div>

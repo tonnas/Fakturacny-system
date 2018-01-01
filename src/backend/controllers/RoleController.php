@@ -7,6 +7,7 @@ use common\models\Role;
 use common\models\RolesSearch;
 use common\models\Permission;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
@@ -38,10 +39,14 @@ class RoleController extends Controller
     {
         $searchModel = new RolesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataPermissions = new ActiveDataProvider([
+            'query' => Permission::find()->where(['ROLE_NAME' => 'All']),
+        ]);
         $model = Role::find()->all();
+
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'dataProvider'    => $dataProvider,
+            'dataPermissions' => $dataPermissions,
             'searchModel'  => $searchModel,
             'model'        => $model,
             'idOperator'   => Yii::$app->params['operator']
@@ -52,19 +57,35 @@ class RoleController extends Controller
      * @param $id
      * @return string
      */
-    public function actionView($id)
+    public function actionUpdate($id)
     {
+        if (!empty(Yii::$app->request->post('permissions'))) {
+            if ($id != 'All') {
+                Permission::deleteAll(['ROLE_NAME' => $id]);
+                $permissions = Yii::$app->request->post('permissions');
+                foreach ($permissions as $permission) {
+                    $new_permission = new Permission();
+                    $new_permission->ROLE_NAME = $id;
+                    $new_permission->NAME      = $permission;
+                    $new_permission->save();
+                }
+                \Yii::$app->getSession()->setFlash('success', 'Opravnenie upravene.');
+            }
+
+            return $this->redirect(['index']);
+        }
+
         $searchModel = new PermissionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $model = Permission::find()->all();
-
-        return $this->render('view', [
+        return $this->render('update', [
             'dataProvider' => $dataProvider,
             'searchModel'  => $searchModel,
-            'model'        => $model,
+            'model'        => Permission::find()->all(),
             'role'         => Role::findIdentity($id),
-            'idOperator'   => Yii::$app->params['operator']
+            'idOperator'   => Yii::$app->params['operator'],
+            'permissions'  => Permission::find(),
+            'role_permissions' => Role::getPermissions($id)
         ]);
     }
 
@@ -119,15 +140,24 @@ class RoleController extends Controller
      */
     public function actionCreatePermission()
     {
+        if (isset(Yii::$app->request->post('Permission')['NAME'])) {
+            $permission = Permission::findOne(['NAME' => Yii::$app->request->post('Permission')['NAME']]);
+            if (is_null($permission)) {
+                $permission            = new Permission();
+                $permission->ROLE_NAME = 'All';
+                $permission->NAME      = Yii::$app->request->post('Permission')['NAME'];
+                $permission->save();
+            } else {
+                \Yii::$app->getSession()->setFlash('warning', 'Opravnenie s týmto menom už existuje.');
+            }
+            \Yii::$app->getSession()->setFlash('success', 'Opravnenie vytvorene.');
 
-    }
+            return $this->redirect(['index']);
+        }
 
-    /**
-     * @param $id
-     * @return string|\yii\web\Response
-     */
-    public function actionUpdate($id)
-    {
+        return $this->renderAjax('createPermission', [
+            'permission' => new Permission()
+        ]);
     }
 
     /**

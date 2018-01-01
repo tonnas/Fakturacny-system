@@ -30,6 +30,10 @@ $this->title = 'Admin';
                             <td><b><?= $opCounts[$operator->ID_OPERATOR]['countOfCustomers'] ?></b></td>
                         </tr>
                         <tr>
+                            <td>Pobocky:</td>
+                            <td><b><?= $opCounts[$operator->ID_OPERATOR]['countOfOffices'] ?></b></td>
+                        </tr>
+                        <tr>
                             <td>Služby:</td>
                             <td><b>0</b></td>
                         </tr>

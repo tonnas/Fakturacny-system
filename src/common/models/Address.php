@@ -26,7 +26,7 @@ class Address extends ActiveRecord
     public function rules()
     {
         return [
-            [['ID_ADDRESS','ID_CITY','STREET','STREET_NUMBER'], 'required'],
+            [['ID_CITY','STREET','STREET_NUMBER'], 'required'],
         ];
     }
 

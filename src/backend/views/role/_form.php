@@ -15,12 +15,12 @@ use yii\widgets\ActiveForm;
         <div class="center" style="max-width: 500px; width: 40%; min-width: 300px; margin-left: 30%">
         <?php $form = ActiveForm::begin(['id' => 'form-create']); ?>
 
-                <?= $form->field($role, 'NAME')->textInput() ?>
+        <?= $form->field($role, 'NAME')->textInput() ?>
 
-                <div class="form-group">
-                    <?= Html::submitButton($role->isNewRecord ? 'Vytvorit rolu' : 'Upraviť rolu',
-                        ['class' => 'btn btn-xs btn-info grid-button', 'name' => 'create-button']) ?>
-                </div>
+        <div class="form-group">
+            <?= Html::submitButton($role->isNewRecord ? 'Vytvorit rolu' : 'Upraviť rolu',
+                ['class' => 'btn btn-xs btn-info grid-button', 'name' => 'create-button']) ?>
+        </div>
 
         <?php ActiveForm::end(); ?>
 

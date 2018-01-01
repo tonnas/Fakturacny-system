@@ -21,6 +21,7 @@ class PersonSearch extends Person
             [[ 'FIRST_NAME', 'LAST_NAME', 'STREET', 'POST_CODE', 'ID_ADDRESS', 'username', 'email'], 'safe'],
         ];
     }
+
     /**
      * @inheritdoc
      */

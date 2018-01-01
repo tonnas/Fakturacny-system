@@ -21,7 +21,7 @@ class Permission extends ActiveRecord
     public function rules()
     {
         return [
-            [['ID_PERMISSION', 'ROLE_NAME', 'NAME'], 'required'],
+            [['ROLE_NAME', 'NAME'], 'required'],
         ];
     }
 
@@ -39,7 +39,7 @@ class Permission extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'NAME' => 'Meno prava',
+            'NAME' => 'Opravnenie',
         ];
     }
 }
