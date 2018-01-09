@@ -1,23 +1,22 @@
 <?php
-namespace common\models;
+namespace common\models\service;
 
 use Yii;
 use yii\db\ActiveRecord;
 
 /**
  * @property integer $id_service
- * @property string $name
- * @property date $date_from
- * @property date $date_to
+ * @property integer $minutes_in
+ * @property integer $minutes_out
  */
-class Service extends ActiveRecord
+class MinuteService extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%SERVICE}}';
+        return '{{%MINUTE_SERVICE}}';
     }
 
     /**
@@ -26,7 +25,7 @@ class Service extends ActiveRecord
     public function rules()
     {
         return [
-            [['NAME'], 'required'],
+            [['MINUTES_IN','MINUTES_OUT', 'ID_SERVICE'], 'required'],
         ];
     }
 
@@ -44,9 +43,8 @@ class Service extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'NAME' => 'Nazov',
-            'ID_SERVICE' => 'Identifikacne cislo',
-            'DATE_FROM' => 'Vytvorena',
+            'MINUTES_IN'  => 'Minuty v sieti',
+            'MINUTES_OUT' => 'Minuty mimo siet',
         ];
     }
 }

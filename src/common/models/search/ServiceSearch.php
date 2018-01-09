@@ -2,7 +2,7 @@
 namespace common\models\search;
 
 use common\models\Office;
-use common\models\Service;
+use common\models\service\Service;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 

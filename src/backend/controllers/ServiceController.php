@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use common\models\search\ServiceSearch;
-use common\models\Service;
+use common\models\service\Service;
 use Yii;
 use yii\db\Query;
 use yii\web\Controller;
@@ -49,66 +49,13 @@ class ServiceController extends Controller
     }
 
     /**
-     * @param $id
-     * @return string
-     */
-    public function actionView($id)
-    {
-    }
-
-    /**
-     *
-     */
-    public function actionPair()
-    {
-        return $this->render('pair', []);
-    }
-
-    /**
-     *
-     */
-    public function actionMinute()
-    {
-        return $this->render('minute', []);
-    }
-
-    /**
-     *
-     */
-    public function actionSms()
-    {
-        return $this->render('sms', []);
-    }
-
-    /**
-     *
-     */
-    public function actionPackage()
-    {
-        return $this->render('package', []);
-    }
-
-    /**
-     *
-     */
-    public function actionNet()
-    {
-        return $this->render('net', []);
-    }
-
-    /**
-     *
-     */
-    public function actionTariff()
-    {
-        return $this->render('tariff', []);
-    }
-
-    /**
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
+        return $this->render('create',[
+            'model' => new Service()
+        ]);
     }
 
     /**
@@ -117,7 +64,21 @@ class ServiceController extends Controller
      */
     public function actionUpdate($id)
     {
+        $model = Service::findIdentity($id);
+
+        return $this->render('create',[
+            'model' => $model
+        ]);
     }
+
+    /**
+     * @param $id
+     * @return string
+     */
+    public function actionView($id)
+    {
+    }
+
 
     /**
      * @param $id
@@ -137,7 +98,7 @@ class ServiceController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Invoice::findOne($id)) !== null) {
+        if (($model = Service::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
