@@ -1,13 +1,9 @@
 <?php
 
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
-/* @var $person common\models\Person */
-/* @var $user common\models\User */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 

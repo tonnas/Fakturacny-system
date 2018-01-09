@@ -9,7 +9,7 @@ use yii\db\ActiveRecord;
  * @property integer $inside
  * @property integer $outside
  */
-class SmsService extends ActiveRecord
+class Package extends ActiveRecord
 {
     /**
      * @inheritdoc

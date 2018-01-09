@@ -4,6 +4,7 @@ namespace backend\controllers;
 use common\models\Office;
 use common\models\Operator;
 use common\models\PhoneNumber;
+use common\models\service\Service;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -71,6 +72,7 @@ class SiteController extends Controller
             $opCounts[$operator->ID_OPERATOR]['countOfEmployee']  = Login::getCountOfEmployees($operator->ID_OPERATOR);
             $opCounts[$operator->ID_OPERATOR]['countOfCustomers'] = Login::getCountOfCustomers($operator->ID_OPERATOR);
             $opCounts[$operator->ID_OPERATOR]['countOfOffices']   = Office::getOperatorOfficeCount($operator->ID_OPERATOR);
+            $opCounts[$operator->ID_OPERATOR]['countOfServices']  = Service::getOperatorServiceCount($operator->ID_OPERATOR);
         }
 
         return $this->render('index', [
@@ -99,6 +101,7 @@ class SiteController extends Controller
         $customerCount = Login::getCountOfCustomers($operator->ID_OPERATOR);
         $officiesCount = Office::getOperatorOfficeCount($operator->ID_OPERATOR);
         $numberCount   = PhoneNumber::getOperatorNumbersCount($operator->ID_OPERATOR);
+        $serviceCount  = Service::getOperatorServiceCount($operator->ID_OPERATOR);
 
         return $this->render('operator',[
             'operator' => $operator,
@@ -106,6 +109,7 @@ class SiteController extends Controller
             'customerCount' => $customerCount,
             'officiesCount' => $officiesCount,
             'numberCount'   => $numberCount,
+            'serviceCount'  => $serviceCount,
         ]);
     }
 

@@ -31,7 +31,7 @@ Modal::end();
                     </h1>
                     <div style="margin-left: 4%">
                         <?= Html::a(
-                            'Vytvorit zamestnanca',
+                            'Vytvoriť zamestnanca',
                             ['create'],
                             ['data' => [
                                 'method' => 'post',

@@ -49,4 +49,12 @@ class Service extends ActiveRecord
             'DATE_FROM' => 'Vytvorena',
         ];
     }
+
+    public static function getOperatorServiceCount($idOperator)
+    {
+        return static::find()
+            ->select(['COUNT(*) AS cnt'])
+//            ->where(['ID_OPERATOR' => $idOperator])
+            ->count();
+    }
 }

@@ -29,15 +29,15 @@ $this->title = 'Admin';
             ['customer/index']
         )
         ?>
-        <?= Html::a('<div class="col col-lg-2 panel operator-link" ><h2 class="operato-title"><span class="glyphicon glyphicon-list-alt"></span> Služby</h2><b><p style="margin-top: 30px; font-size: 20px"><h2>0</h2></p></b></div>',
+        <?= Html::a('<div class="col col-lg-2 panel operator-link" ><h2 class="operato-title"><span class="glyphicon glyphicon-list-alt"></span> Služby</h2><b><p style="margin-top: 30px; font-size: 20px"><h2>'.$serviceCount.'</h2></p></b></div>',
             ['service/index']
         )
         ?>
-        <?= Html::a('<div class="col col-lg-2 panel operator-link" ><h2 class="operato-title"><span class="glyphicon glyphicon-earphone"></span> Tel. cisla</h2><b><p style="margin-top: 30px; font-size: 20px"><h2>'.$numberCount.'</h2></p></b></div>',
+        <?= Html::a('<div class="col col-lg-2 panel operator-link" ><h2 class="operato-title"><span class="glyphicon glyphicon-earphone"></span> Tel. čísla</h2><b><p style="margin-top: 30px; font-size: 20px"><h2>'.$numberCount.'</h2></p></b></div>',
             ['number/index']
         )
         ?>
-        <?= Html::a('<div class="col col-lg-2 panel operator-link" ><h2 class="operato-title"><span class="glyphicon glyphicon-home"></span> Pobocky</h2><b><p style="margin-top: 30px; font-size: 20px"><h2>'.$officiesCount.'</h2></p></b></div>',
+        <?= Html::a('<div class="col col-lg-2 panel operator-link" ><h2 class="operato-title"><span class="glyphicon glyphicon-home"></span> Pobočky</h2><b><p style="margin-top: 30px; font-size: 20px"><h2>'.$officiesCount.'</h2></p></b></div>',
             ['operator/office']
         )
         ?>

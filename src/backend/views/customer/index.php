@@ -30,7 +30,7 @@
                     </h1>
                     <div style="margin-left: 4%">
                         <?= Html::a(
-                            'Vytvorit zákazníka',
+                            'Vytvoriť zákazníka',
                             ['create'],
                             ['data' => [
                                 'method' => 'post',

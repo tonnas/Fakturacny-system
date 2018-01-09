@@ -35,7 +35,7 @@ $this->title = 'Admin';
                         </tr>
                         <tr>
                             <td>Služby:</td>
-                            <td><b>0</b></td>
+                            <td><b><?= $opCounts[$operator->ID_OPERATOR]['countOfServices'] ?></b></td>
                         </tr>
                     </table>
                 </div>

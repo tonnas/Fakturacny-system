@@ -14,7 +14,8 @@ use yii\widgets\Pjax;
 ?>
 <div class="site-index">
     <div class="body-content">
-        <div class="row">
+
+        <div class="row row_container">
             <div class="col-lg-12">
                 <div class="person-index">
                     <h1><?php echo Html::encode($this->title) ?></h1>
