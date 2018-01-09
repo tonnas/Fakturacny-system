@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use common\models\search\ServiceSearch;
+use common\models\Service;
 use Yii;
 use yii\db\Query;
 use yii\web\Controller;
@@ -34,7 +36,14 @@ class ServiceController extends Controller
      */
     public function actionIndex()
     {
+        $searchModel = new ServiceSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,'customer', 1);
+        $model = Service::find()->all();
+
         return $this->render('index', [
+            'searchModel'  => $searchModel,
+            'dataProvider' => $dataProvider,
+            'model'        => $model,
             'idOperator'   => Yii::$app->params['operator']
         ]);
     }

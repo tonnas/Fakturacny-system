@@ -48,7 +48,7 @@ class PhoneNumber extends ActiveRecord
 
     public static function getOperatorNumbers($operator)
     {
-        $numbers = self::find()->all();
+        $numbers = self::find()->where(['IDENTIFICATION_NUMBER' => NULL])->all();
         $data = [];
         foreach ($numbers as $number) {
             $data[$number->PHONE_NUMBER] = $number->PHONE_NUMBER;

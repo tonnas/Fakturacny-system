@@ -12,6 +12,50 @@
     $this->params['breadcrumbs'][] = $this->title;
 
 ?>
+
+<div class="site-index">
+    <div class="body-content">
+        <div class="row row_container">
+            <div class="col-lg-12">
+                <div class="person-index">
+                    <h1 style="margin-left: 4%">
+                        <?php echo Html::encode($this->title) ?>
+                    </h1>
+                    <div style="margin-left: 4%">
+                        <?= Html::a('Vytvorit sluzbu', ['create']) ?>
+                    </div>
+                    <br>
+                    <div style="width: 98%; margin-left: 1%">
+                        <?php Pjax::begin(); ?>
+                        <?= GridView::widget([
+                            'dataProvider' => $dataProvider,
+                            'filterModel'  => $searchModel,
+                            'options' => ['style' => 'max-height:30px;',
+                                'max-width:10px;'],
+                            'summary' => '<br>',
+                            'rowOptions' => function ($model, $key, $index, $grid) {
+                                return ['id' => $model['ID_SERVICE'], 'onclick' => 'alert(this.id);', 'class'=>'hoverRow'];
+                            },
+                            'columns' => [
+                                ['class' => 'yii\grid\SerialColumn'],
+                                'NAME',
+                                'DATE_FROM'
+                            ],
+                        ]); ?>
+                        <?php Pjax::end(); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<style>
+    .hoverRow:hover {
+        background-color: red;
+    }
+</style>
+
 <div class="site-index">
     <div class="body-content">
         <div class="row">

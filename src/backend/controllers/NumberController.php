@@ -38,6 +38,7 @@ class NumberController extends Controller
     {
         $searchModel = new PhoneNumberSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination = ['pageSize' => 5];
 
         $idOperator = 1;
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace backend\controllers;
 
 use common\models\Address;
@@ -74,44 +75,64 @@ class CustomerController extends Controller
      */
     public function actionCreate()
     {
+        if (!is_null(Yii::$app->request->post('id_operator'))) {
+            $idOperator = Yii::$app->request->post('id_operator');
+        } else {
+            $this->redirect(['site/index']);
+        }
         if (!is_null(Yii::$app->request->post('SignupForm'))) {
             $signup = Yii::$app->request->post('SignupForm');
-            $check_user = User::findByUsername($signup['username']);
-            if (is_null($check_user)) {
-                $user = new SignupForm();
-                $user->
-                $user = $user->signup();
-                $user->load(Yii::$app->request->post());
-            } else {
-                $user = $check_user;
+            $user = User::findByUsername($signup['username']);
+            if (is_null($user)) {
+                $user = new User();
+//                $user->load(Yii::$app->request->post());
+                $user->USERNAME    = $signup['username'];
+                $user->EMAIL       = $signup['email'];
+                $user->ROLE_NAME   = 'employee';//$signup['role_name'];
+                $user->ID_OPERATOR = $signup['ID_OPERATOR'];
+                $user->setPassword($signup['password']);
+                $user->generateAuthKey();
+                $user->save();
+                $user = User::findByUsername($signup['username']);
             }
-            if (isset($user->ID_USER)) {
+
+            if (isset($user->USERNAME)) {
                 $data_person = Yii::$app->request->post('Person');
                 if (is_null(Person::findIdentity($data_person['IDENTIFICATION_NUMBER']))) {
                     $person             = new Person();
-                    $person->ID_USER    = $user->ID_USER;
+                    $person->USERNAME   = $user->USERNAME;
+                    $person->ID_ADDRESS = 1;
                     $person->LAST_NAME  = $data_person['LAST_NAME'];
-                    $person->CITY       = $data_person['POST_CODE'];
-                    $person->STREET     = $data_person['STREET'];
                     $person->FIRST_NAME = $data_person['FIRST_NAME'];
-                    $person->POST_CODE  = $data_person['POST_CODE'];
                     $person->IDENTIFICATION_NUMBER = $data_person['IDENTIFICATION_NUMBER'];
-                    if ($person->save()) {
-                        \Yii::$app->getSession()->setFlash('success', 'Úspešne uložený používateľ');
+                    $person_save = $person->save();
+                    $phone_number = new PhoneNumber();
+                    $phone_number->IDENTIFICATION_NUMBER = $person->IDENTIFICATION_NUMBER;
+                    $phone_number->PHONE_NUMBER = Yii::$app->request->post('PhoneNumber')['PHONE_NUMBER'];
+                    $phone_number->save();
+
+                    if ($person_save) {
+                        \Yii::$app->getSession()->setFlash('success', 'Úspešne uložený zamestnanec');
                     } else {
-                        \Yii::$app->getSession()->setFlash('warning', 'Nepodarilo sa uložiť nového používateľa');
+                        \Yii::$app->getSession()->setFlash('warning', 'Nepodarilo sa uložiť nového zamestnanca');
                     }
+
                     return $this->redirect(['index']);
                 }
             }
-            \Yii::$app->getSession()->setFlash('warning', 'Osobu s týmto rodným číslom už v databáze máme');
+            \Yii::$app->getSession()->setFlash('warning', 'Zamestnanca s týmto rodným číslom už v databáze máme');
+
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'person'     => new Person(),
                 'user'       => new SignupForm(),
                 'address'    => new Address(),
-                'idOperator'   => Yii::$app->params['operator']
+                'office'     => new Office(),
+                'phone'      => new PhoneNumber(),
+                'idOperator' => 1,
+                'roles'      => Role::find()->all(),
+                'phoneNumbers' => PhoneNumber::getOperatorNumbers(1),
             ]);
         }
 

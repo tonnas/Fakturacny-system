@@ -46,6 +46,7 @@ class EmployeeController extends Controller
     {
         $searchModel = new PersonSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'employee', 1);
+        $dataProvider->pagination = ['pageSize' => 5];
 
         $model = Person::findOperatorEmployies(1);
 
@@ -91,7 +92,7 @@ class EmployeeController extends Controller
             $user = User::findByUsername($signup['username']);
             if (is_null($user)) {
                 $user = new User();
-                $user->load(Yii::$app->request->post());
+//                $user->load(Yii::$app->request->post());
                 $user->USERNAME    = $signup['username'];
                 $user->EMAIL       = $signup['email'];
                 $user->ROLE_NAME   = 'employee';//$signup['role_name'];
@@ -110,9 +111,9 @@ class EmployeeController extends Controller
                     $person->ID_ADDRESS = 1;
                     $person->LAST_NAME  = $data_person['LAST_NAME'];
                     $person->FIRST_NAME = $data_person['FIRST_NAME'];
-                    $person->IDENTIFICATION_NUMBER   = $data_person['IDENTIFICATION_NUMBER'];
+                    $person->IDENTIFICATION_NUMBER = $data_person['IDENTIFICATION_NUMBER'];
                     $person_save = $person->save();
-                    $employee                        = new Employee();
+                    $employee    = new Employee();
                     $employee->ID_OFFICE             = 1;
                     $employee->IDENTIFICATION_NUMBER = $person->IDENTIFICATION_NUMBER;
                     $employee->VALID_FROM            = 1;
@@ -127,10 +128,12 @@ class EmployeeController extends Controller
                     } else {
                         \Yii::$app->getSession()->setFlash('warning', 'Nepodarilo sa uložiť nového zamestnanca');
                     }
+
                     return $this->redirect(['index']);
                 }
             }
             \Yii::$app->getSession()->setFlash('warning', 'Zamestnanca s týmto rodným číslom už v databáze máme');
+
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
@@ -165,7 +168,7 @@ class EmployeeController extends Controller
 
         if (!is_null(Yii::$app->request->post('User'))) {
             if (!is_null($person)) {
-                
+
                 $user = User::findIdentity($person->USERNAME);
                 if (!is_null($user)) {
                     if (!is_null(Yii::$app->request->post('User'))) {
